@@ -1,3 +1,6 @@
+require_relative('rot13')
+require('test/unit')
+
 class TestRot13 < Test::Unit::TestCase
 
   def test_rot13_match
@@ -8,11 +11,11 @@ class TestRot13 < Test::Unit::TestCase
 
   def test_rot13_input
     assert_equal '', ''.rot13
-    assert_raise ArgumentError { 'ą'.rot13 }
-    assert_raise ArgumentError { '1sdsdds'.rot13 }
+    assert_raise (ArgumentError.new('Argument is not valid alphabet letter')) { 'ą'.rot13 }
+    assert_raise (ArgumentError.new('Argument is not valid alphabet letter')) { '1sdsdds'.rot13 }
   end
 
   def test_rot13_case_sensitive
-    assert_equal 'PrPr sebt', 'PePe frog'.rot13
+    assert_equal 'CrCr sebt', 'PePe frog'.rot13
   end
 end
