@@ -35,3 +35,4 @@ class TestRor13 < Test::Unit::TestCase
     assert_raise(ArgumentError.new("numbers not allowed")) {"1".ror13}   
   end 
 end
+
