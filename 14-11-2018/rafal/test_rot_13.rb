@@ -22,6 +22,7 @@ class TestRot13 < Test::Unit::TestCase
   def test_not_english_alphabet
     assert_raise(StandardError.new("unknown chars")) {"ą".rot13}
     assert_raise(StandardError.new("unknown chars")) {"1".rot13}
+    assert_raise(StandardError.new("unknown chars")) {"123dfggree".rot13}
   end
 
 end
