@@ -17,7 +17,7 @@ class TestRot13 < Test::Unit::TestCase
     assert_equal "UryyB", 'HellO'.rot13
   end
 
-  def test_rot13
+  def test_rot13_with_appropriate_strings
     assert_equal 'uryyb', 'hello'.rot13
     assert_equal 'hejnal urwany', 'urwany hejnal'.rot13
     assert_equal 'tekst', 'tekst'.rot13.rot13
