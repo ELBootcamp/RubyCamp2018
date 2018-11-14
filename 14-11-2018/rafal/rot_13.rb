@@ -1,6 +1,7 @@
 class String
 
   ALPHABET = [*'a'..'z']
+  ROTATED_ALPHABET = ALPHABET.rotate(13)
   
   def rot13
     downcase!
@@ -9,7 +10,7 @@ class String
           raise StandardError.new("unknown chars") 
       end
     end
-    tr(ALPHABET.join, ALPHABET.rotate(13).join)
+    tr(ALPHABET.join, ROTATED_ALPHABET.join)
   end
 
 end
