@@ -4,11 +4,9 @@ class String
   
   def rot13
     downcase!
-    each_char do |x| 
-      unless x == " "
-        unless ALPHABET.include?(x) 
+    each_char do |char| 
+      unless char == " " || ALPHABET.include?(char) 
           raise StandardError.new("unknown chars") 
-        end
       end
     end
     tr(ALPHABET.join, ALPHABET.rotate(13).join)
