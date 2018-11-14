@@ -3,11 +3,15 @@ class String
   ALPHABET = [*'a'..'z']
   
   def rot13
-    self.downcase!
-    self.each_char do |x| 
-      raise StandardError.new("unknown chars") unless ALPHABET.include?(x) unless x == " "
+    downcase!
+    each_char do |x| 
+      unless x == " "
+        unless ALPHABET.include?(x) 
+          raise StandardError.new("unknown chars") 
+        end
+      end
     end
-    self.tr(ALPHABET.join, ALPHABET.rotate(13).join)
+    tr(ALPHABET.join, ALPHABET.rotate(13).join)
   end
 
 end
