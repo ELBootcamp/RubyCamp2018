@@ -1,12 +1,10 @@
 class Greet
+
   def greet(name = "my friend")
     if name.is_a? Array 
       if name.length == 2 
         if name.any? {|name| name.include?("\"")}  
-          name = name.map do |name|
-            name.include?("\"") ? name.tr("\"","") : name
-          end        
-          "Hello, #{name.first} and #{name.last}."
+          handle_double_quotes(name)
         elsif name.any? {|name| name.include?(",")}
           name = name.map do |name|
             name.include?(",") ? name.split(", ") : name
@@ -35,4 +33,12 @@ class Greet
       "Hello, my friend."
    end
   end
+
+  def handle_double_quotes(name)
+    name = name.map do |name|
+      name.include?("\"") ? name.tr("\"","") : name
+    end        
+    "Hello, #{name.first} and #{name.last}."
+  end
+
 end
