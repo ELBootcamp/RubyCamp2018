@@ -23,7 +23,7 @@ class Greet
         last_name = name.pop
         "Hello, #{name.join(", ")}, and #{last_name}."
       end
-    else name == name.upcase
+    else
       name == name.upcase ? "HELLO #{name}." : "Hello, #{name}."
     end
   end
