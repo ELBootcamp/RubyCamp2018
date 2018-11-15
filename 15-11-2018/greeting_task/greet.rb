@@ -3,7 +3,8 @@ class Greet
   def greet(name)
     name ||= "my friend"
     
-    if name.is_a? Array 
+    case
+    when name.is_a?(Array)
       if name.length == 2 
         if name.any? {|name| name.include?("\"")}  
           handle_double_quotes(name)
@@ -22,7 +23,7 @@ class Greet
         name.delete_at(-1)
         "Hello, " + name.join(", ") + ", and " + last_name + "."
       end
-    elsif
+    when
       name && name == name.upcase
       "HELLO #{name}."
     else name 
