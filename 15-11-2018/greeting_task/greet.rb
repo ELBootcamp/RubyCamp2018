@@ -16,9 +16,7 @@ class Greet
           "Hello, #{name.first} and #{name.last}."
         end
       elsif name.any? {|name| name == name.upcase}
-        upcase_name = name.detect {|name| name == name.upcase }
-        name.delete_at(name.index(upcase_name))
-        "Hello, #{name.first} and #{name[-1]}. AND HELLO #{upcase_name}!"
+        handle_upcase_argument(name)
       else  
         last_name = name.last
         name.delete_at(-1)
@@ -43,6 +41,12 @@ class Greet
     name = name.map do |name|
       name.include?(",") ? name.split(", ") : name
     end.flatten
+  end
+
+  def handle_upcase_argument(name)
+    upcase_name = name.detect {|name| name == name.upcase }
+    name.delete_at(name.index(upcase_name))
+    "Hello, #{name.first} and #{name[-1]}. AND HELLO #{upcase_name}!"
   end
 
 end
