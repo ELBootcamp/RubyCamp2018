@@ -26,11 +26,9 @@ class Greet
         puts names
         "Hello, "+names+"#{name.length > 1? ",": ""} and " + last_name + "."  
       end
-    elsif name 
-      "Hello, #{name}."
-      "#{name == name.upcase ? "HELLO ": "Hello, "}"+ name + "."
-    else
-      "Hello, my friend."
+    else 
+      "#{name == name.to_s.upcase ? "HELLO ": "Hello, "}" + "#{name.nil? ? "my friend." : name +"."}"
    end
   end
 end
+
