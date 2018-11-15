@@ -9,10 +9,10 @@ class RpnCalculator
 
   def self.calculate(expression)
     stack = []
-    raise InvalidExpression.new if expression.empty?
+    raise InvalidExpression if expression.empty?
 
     expression.split(' ').each do |ex|
-      raise InvalidExpression.new if OPERAND.include?(ex) || ex.to_i
+      raise InvalidExpression unless RpnCalculator::OPERAND.include?(ex) || ex.numeric?
 
       if !OPERAND.include?(ex)
         stack.push(ex.to_f)
@@ -20,11 +20,17 @@ class RpnCalculator
         val1 = stack.pop
         val2 = stack.pop
         
-        raise NotEnoughtOperands.new if val1.nil? || val2.nil?
+        raise NotEnoughtOperands if val1.nil? || val2.nil?
 
         stack.push(val2.method(ex).call(val1))
       end
     end
     stack.first
+  end
+end
+
+class String
+  def numeric?
+    Float(self) != nil rescue false
   end
 end
