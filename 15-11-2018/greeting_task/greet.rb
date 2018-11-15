@@ -1,10 +1,8 @@
 class Greet
   def greet(name)
     if !name.is_a? Array
-      return "#{name == name.to_s.upcase ? "HELLO ": "Hello, "}" + "#{name.nil? ? "my friend." : name +"."}"  
-    end
-
-    if name.any? {|name| name.include?("\"")}  
+      "#{name == name.to_s.upcase ? "HELLO ": "Hello, "}" + "#{name.nil? ? "my friend." : name +"."}"  
+    elsif name.any? {|name| name.include?("\"")}  
       name = name.map do |name|
         name.include?("\"") ? name.tr("\"","") : name
       end        
