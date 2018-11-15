@@ -8,9 +8,7 @@ class Greet
         if name.any? {|name| name.include?("\"")}  
           handle_double_quotes(name)
         elsif name.any? {|name| name.include?(",")}
-          name = name.map do |name|
-            name.include?(",") ? name.split(", ") : name
-          end.flatten
+          name = separate_arguments(name)
           last_name = name.last
           name.delete_at(-1) 
           "Hello, #{name.join(", ")}, and #{last_name}."
@@ -39,6 +37,12 @@ class Greet
       name.include?("\"") ? name.tr("\"","") : name
     end        
     "Hello, #{name.first} and #{name.last}."
+  end
+
+  def separate_arguments(name)
+    name = name.map do |name|
+      name.include?(",") ? name.split(", ") : name
+    end.flatten
   end
 
 end
