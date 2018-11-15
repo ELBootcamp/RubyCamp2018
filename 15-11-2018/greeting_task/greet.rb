@@ -1,6 +1,8 @@
 class Greet
 
-  def greet(name = "my friend")
+  def greet(name)
+    name ||= "my friend"
+    
     if name.is_a? Array 
       if name.length == 2 
         if name.any? {|name| name.include?("\"")}  
@@ -27,10 +29,8 @@ class Greet
     elsif
       name && name == name.upcase
       "HELLO #{name}."
-    elsif name 
+    else name 
       "Hello, #{name}."
-    else
-      "Hello, my friend."
    end
   end
 
