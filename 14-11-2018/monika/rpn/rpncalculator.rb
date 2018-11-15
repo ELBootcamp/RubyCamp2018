@@ -1,18 +1,33 @@
 class RpnCalculator 
 
   def calculate(expression)
+    stack= []
+    while expression.gsub(/\s+/, "") != "" do
 
-    #while expression != "" do
-      delimiters = ['+', '-', "*","%"]
-      stack = expression.split(Regexp.union(delimiters)).first
-      expression = expression.sub(stack,"")
-      stack.split("")
-      if expression[0].include? "+" && stack.length >=2 {stack.last + stack[stack.length-1]}
-      else "bla"
+      stack += expression.change.split(" ")
+      expression = expression.sub(expression.change,"")
 
-    #end
+      if expression != ""
+        operand = expression[0]
+        stack << eval(stack[-2]+operand+stack[-1]).to_s if eval(stack[-1]+operand+stack[-2])
+        stack.delete_at(-2)
+        stack.delete_at(-2)
+        expression = expression[1..-1]
+      end
+    end
+
+    result=stack.join("").to_i
+
   end
+
 end  
 
+class String 
 
-p RpnCalculator.new.calculate("54+2+5,67")
+  def change 
+    delimiters = ['+', '-', "*","%"]
+    self.split(Regexp.union(delimiters)).first
+  end
+end
+
+p RpnCalculator.new.calculate("3 1 - 2 2 + *")
