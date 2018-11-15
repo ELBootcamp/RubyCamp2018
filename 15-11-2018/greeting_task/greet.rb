@@ -12,7 +12,7 @@ class Greet
             name.include?(",") ? name.split(", ") : name
           end.flatten
           last_name = name.last
-          name.delete_at(name.length-1) 
+          name.delete_at(-1) 
           "Hello, #{name.join(", ")}, and #{last_name}."
         else 
           "Hello, #{name.first} and #{name.last}."
@@ -23,14 +23,14 @@ class Greet
         "Hello, #{name.first} and #{name[-1]}. AND HELLO #{upcase_name}!"
       else  
         last_name = name.last
-        name.delete_at(name.length-1)
+        name.delete_at(-1)
         "Hello, " + name.join(", ") + ", and " + last_name + "."
       end
     elsif
       name && name == name.upcase
       "HELLO #{name}."
     elsif name 
-      "Hello, Bob."
+      "Hello, #{name}."
     else
       "Hello, my friend."
    end
