@@ -1,44 +1,42 @@
-class InvalidExpression < StandardError
-end
-
-class NotEnoughtOperands < StandardError
-end
-
 class RpnCalculator
+  OPERANDS = ['+', '-', '*', '/']
 
   def self.calculate(expression)
     stack = []
     raise InvalidExpression if expression.empty?
 
-    expression.split(' ').each do |ex|
-      raise InvalidExpression unless ex.operand? || ex.numeric?
+    expression.split(' ').each do |element|
+      raise InvalidExpression unless valid_operand?(element) || element.numeric?
 
-      unless ex.operand?
-        stack.push(ex.to_f)
+      unless valid_operand?(element)
+        stack.push(element.to_f)
       else
         values = stack.pop, stack.pop
         raise NotEnoughtOperands if values.any?(&:nil?)
 
-        stack.push((values.last).execute(ex, values.first))
+        stack.push((values.last).execute(element, values.first))
       end
     end
     stack.first
   end
+
+  def self.valid_operand?(element)
+    OPERANDS.include?(element)
+  end
 end
 
-class String
-  OPERANDS = ['+', '-', '*', '/']
+class InvalidExpression < StandardError; end
+class NotEnoughtOperands < StandardError; end
 
+class String
+  
   def numeric?
     Float(self) != nil rescue false
-  end
-
-  def operand?
-    OPERANDS.include?(self)
   end
 end
 
 class Object
+
   def execute(method_name, params)
     self.method(method_name).call(*params)
   end
