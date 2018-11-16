@@ -5,23 +5,21 @@ class NotEnoughtOperands < StandardError
 end
 
 class RpnCalculator
-  OPERAND = ['+', '-', '*', '/']
 
   def self.calculate(expression)
     stack = []
     raise InvalidExpression if expression.empty?
 
     expression.split(' ').each do |ex|
-      raise InvalidExpression unless RpnCalculator::OPERAND.include?(ex) || ex.numeric?
+      raise InvalidExpression unless ex.operand? || ex.numeric?
 
-      if !OPERAND.include?(ex)
+      unless ex.operand?
         stack.push(ex.to_f)
       else
-        val1, val2 = stack.pop, stack.pop
-        
-        raise NotEnoughtOperands if val1.nil? || val2.nil?
+        values = stack.pop, stack.pop
+        raise NotEnoughtOperands if values.any?(&:nil?)
 
-        stack.push(val2.method(ex).call(val1))
+        stack.push((values.last).execute(ex, values.first))
       end
     end
     stack.first
@@ -29,7 +27,19 @@ class RpnCalculator
 end
 
 class String
+  OPERANDS = ['+', '-', '*', '/']
+
   def numeric?
     Float(self) != nil rescue false
+  end
+
+  def operand?
+    OPERANDS.include?(self)
+  end
+end
+
+class Object
+  def execute(method_name, params)
+    self.method(method_name).call(*params)
   end
 end
