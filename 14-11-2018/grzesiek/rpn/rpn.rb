@@ -2,19 +2,22 @@ class NotEnoughOperands < StandardError
 end
 
 class InvalidExpression < StandardError
-  # def initialize
-  #   @message = "Not enough operands"
-  # end
+  def initialize
+    @message = "Expression is invalid"
+  end
 end
 
 class RpnCalculator
   OPERANDS = ["+", "-", "*", "/"]  
 
   def self.calculate(expression)
-    raise InvalidExpression if expression.empty?
+    (expression.empty? || expression.match(/[a-zA-Z]/)) && (raise InvalidExpression)
     numbers_stack = []
+    counter = 0
     result = 0.0
+    
     expression.split(' ').each do |element|
+      counter += 1
       if !OPERANDS.include?(element) 
         numbers_stack << element
       else 
@@ -22,6 +25,7 @@ class RpnCalculator
         result = numbers_stack[-1]
       end
     end
+    (counter.even?) && (raise NotEnoughOperands)
     result
   end
 
@@ -32,6 +36,3 @@ class RpnCalculator
   end
   
 end
-
-p RpnCalculator.calculate("15 7 1 1 + - / 3 * 2 1 1 + + -")
-p RpnCalculator.calculate("2 3 7 * -")

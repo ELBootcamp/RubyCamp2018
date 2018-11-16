@@ -10,8 +10,8 @@ class TestRpnCalculator < Test::Unit::TestCase
   end
 
   def test_calculate_edge_cases
-    assert_raise InvalidExpression { RpnCalculator.calculate("") }
-    assert_raise InvalidExpression { RpnCalculator.calculate("abc") }
-    assert_raise NotEnoughOperands { RpnCalculator.calculate("abc") }
+    assert_raise (InvalidExpression.new) { RpnCalculator.calculate("") }
+    assert_raise (InvalidExpression.new) { RpnCalculator.calculate("abc") }
+    assert_raise (NotEnoughOperands) { RpnCalculator.calculate("1 +") }
   end
 end
