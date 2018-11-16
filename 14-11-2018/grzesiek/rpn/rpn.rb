@@ -25,12 +25,14 @@ class RpnCalculator
         result = numbers_stack[-1]
       end
     end
-    (counter.even?) && (raise NotEnoughOperands)
+    counter.even? && (raise NotEnoughOperands)
     result
   end
 
-  def self.compute_with(element, numbers_stack)
-    computation = numbers_stack[-2].to_f.method(element).call(numbers_stack[-1].to_f)
+  private
+
+  def self.compute_with(operand, numbers_stack)
+    computation = numbers_stack[-2].to_f.method(operand).call(numbers_stack[-1].to_f)
     numbers_stack = numbers_stack[0...-2]
     numbers_stack << computation
   end
