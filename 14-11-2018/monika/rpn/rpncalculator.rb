@@ -1,6 +1,12 @@
 class RpnCalculator 
 
   def calculate(expression)
+
+    if expression == "" 
+      raise InvalidExpression
+    elsif expression.include?("~ /\d/")
+      raise InvalidExpression
+    end
     stack= []
     while expression.gsub(/\s+/, "") != "" do
 
@@ -28,6 +34,14 @@ class String
     delimiters = ['+', '-', "*","%"]
     self.split(Regexp.union(delimiters)).first
   end
+end
+
+class InvalidExpression < StandardError
+
+end
+
+class NotEnoughOperands < StandardError
+
 end
 
 p RpnCalculator.new.calculate("3 1 - 2 2 + *")

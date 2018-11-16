@@ -19,14 +19,14 @@ class TestRpnCalculator < Test::Unit::TestCase
   end 
 
   def test_not_enough_operands  
-    #assert_raise(NotEnoughOperands.new) {RpnCalculator.new.calculate("1 +")}   
+    assert_raise(NotEnoughOperands.new) {RpnCalculator.new.calculate("1 +")}   
   end 
 
   def test_invalid_expression1  
-    #assert_raise(InvalidExpression.new) {RpnCalculator.new.calculate("")}    
+    assert_raise(InvalidExpression.new) {RpnCalculator.new.calculate("")}    
   end 
 
   def test_invalid_expression2  
-    #assert_raise(InvalidExpression.new) {RpnCalculator.new.calculate("abc")}     
+    assert_raise(InvalidExpression.new) {RpnCalculator.new.calculate("abc")}     
   end 
 end 
