@@ -4,9 +4,12 @@ class RpnCalculator
 
     if expression == "" 
       raise InvalidExpression
-    elsif expression.include?("~ /\d/")
+    elsif expression.split("").none? {|element| element =~ /\d/}
       raise InvalidExpression
+    elsif expression.number_of_operands + 1 != expression.number_of_digits 
+      raise NotEnoughOperands
     end
+  
     stack= []
     while expression.gsub(/\s+/, "") != "" do
 
@@ -34,6 +37,17 @@ class String
     delimiters = ['+', '-', "*","%"]
     self.split(Regexp.union(delimiters)).first
   end
+
+  def number_of_operands
+    delimiters = "+-*%"
+    self.split("").select {|element| delimiters.include? element}.length
+  end
+
+  def number_of_digits
+    digits = "0123456789"
+    self.split("").select {|element| digits.include? element}.length
+  end
+
 end
 
 class InvalidExpression < StandardError
@@ -44,4 +58,6 @@ class NotEnoughOperands < StandardError
 
 end
 
-p RpnCalculator.new.calculate("3 1 - 2 2 + *")
+
+
+

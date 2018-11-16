@@ -3,7 +3,7 @@ require 'test/unit'
 
 class TestRpnCalculator < Test::Unit::TestCase
   def test_calculation1
-    assert_equal 12, RpnCalculator.new.calculate("2 2 + 3*")
+    assert_equal 12, RpnCalculator.new.calculate("2 2 + 3 *")
   end
   
   def test_calculation2
