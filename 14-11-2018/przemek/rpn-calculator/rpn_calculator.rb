@@ -17,8 +17,7 @@ class RpnCalculator
       if !OPERAND.include?(ex)
         stack.push(ex.to_f)
       else
-        val1 = stack.pop
-        val2 = stack.pop
+        val1, val2 = stack.pop, stack.pop
         
         raise NotEnoughtOperands if val1.nil? || val2.nil?
 
