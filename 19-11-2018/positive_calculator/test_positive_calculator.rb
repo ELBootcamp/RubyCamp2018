@@ -17,4 +17,10 @@ class TestPositiveCalculator < Test::Unit::TestCase
     PositiveCalculator.new.add('1\n2\n3')
   end
 
+  def test_not_enough_numbers_error
+    assert_raise NotEnoughNumbers do
+       PositiveCalculator.new.add('1\n')
+    end
+  end
+
 end
