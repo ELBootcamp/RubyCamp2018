@@ -12,13 +12,10 @@ private
 
   def calc_expression(string_numbers, method_string = '+')
     return 0 if string_numbers.empty? 
-    delimiter = ','
 
-    if string_numbers[0..1] == '//'
-      string_numbers = string_numbers[2..-1].split('\n')
-      delimiter = (string_numbers.first || ',')
-      string_numbers = string_numbers.last
-    end
+    delimiter, string_numbers = set_delimiter(string_numbers)
+
+    delimiter ||= ','
 
     string_numbers = string_numbers.tr('\n', ',')
 
@@ -37,6 +34,16 @@ private
     end 
 
     result.negative? ? (raise NegativesNotAllowed) : result
+  end
+
+  def set_delimiter(string_numbers) 
+    if string_numbers[0..1] == '//'
+      string_numbers = string_numbers[2..-1].split('\n')
+      delimiter = (string_numbers.first || ',')
+      string_numbers = string_numbers.last
+    end
+
+    [delimiter, string_numbers]
   end
 
 end
