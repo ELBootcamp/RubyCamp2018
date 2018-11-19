@@ -25,7 +25,7 @@ class TestPositiveCalculator < Test::Unit::TestCase
 
   def test_add_method_delimiter
     assert_equal 3, 
-    PositiveCalculator.new.add('//;\n1;2')
+    PositiveCalculator.new.add('//***\n1***2')
   end
 
   def test_negatives
