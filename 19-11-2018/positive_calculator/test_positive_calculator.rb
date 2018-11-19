@@ -7,4 +7,9 @@ class TestPositiveCalculator < Test::Unit::TestCase
     assert_equal 0, PositiveCalculator.new.add("")
   end
 
+  def test_add_numbers
+    assert_equal 21, 
+    PositiveCalculator.new.add('1,5,5,4,6s')
+  end
+
 end
