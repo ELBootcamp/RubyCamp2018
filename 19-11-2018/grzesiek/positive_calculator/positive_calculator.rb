@@ -56,7 +56,6 @@ class PositiveCalculator
       raise_error_if_not_enough_numbers(string_numbers)
       string_numbers.split(',')[1..-1].each do |element| 
         raise NegativesNotAllowed if element.to_f.negative?
-        p element.to_f
         element = "0" if element.to_f > 1000
         subtract_sum += element.to_f
       end
