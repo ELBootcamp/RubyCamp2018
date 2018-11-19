@@ -40,7 +40,10 @@ class PositiveCalculator
         element = "0" if element.to_f > 1000
         subtract_sum += element.to_f 
       end      
-      string_numbers.split(delimiter).first.to_f - subtract_sum
+      subtraction_result = string_numbers.split(delimiter).first.to_f - subtract_sum
+      raise NegativesNotAllowed if subtraction_result < 0
+
+      subtraction_result
     else 
       subtract_sum = 0.0
       string_numbers = string_numbers.tr('\n', ',')
@@ -52,7 +55,10 @@ class PositiveCalculator
         subtract_sum += element.to_f
       end
       raise NegativesNotAllowed if string_numbers.split(',').first.to_f.negative?
-      string_numbers.split(',').first.to_f - subtract_sum
+      subtraction_result = string_numbers.split(',').first.to_f - subtract_sum
+      raise NegativesNotAllowed if subtraction_result < 0
+
+      subtraction_result
     end
   end
 

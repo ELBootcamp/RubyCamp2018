@@ -72,4 +72,10 @@ class TestPositiveCalculator < Test::Unit::TestCase
     PositiveCalculator.new.subtract('1,1001')
   end
 
+  def test_negative_result_subtract_method
+    assert_raise NegativesNotAllowed do
+       PositiveCalculator.new.subtract('1,2')
+    end
+  end
+
 end
