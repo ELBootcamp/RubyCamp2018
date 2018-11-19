@@ -9,6 +9,7 @@ class PositiveCalculator
       delimiter = string_numbers.first
       string_numbers = string_numbers.last
       string_numbers.split(delimiter).each do |element| 
+        raise NegativesNotAllowed if element.to_f.negative?  
         sum += element.to_f
       end      
       sum
@@ -17,6 +18,7 @@ class PositiveCalculator
       string_numbers = string_numbers.tr('\n', ',')
       raise NotEnoughNumbers if string_numbers.split(',').length <=1   
       string_numbers.split(',').each do |element| 
+        raise NegativesNotAllowed if element.to_f.negative?
         sum += element.to_f
       end
       sum
@@ -27,3 +29,4 @@ class PositiveCalculator
 end
 
 class NotEnoughNumbers < StandardError; end 
+class NegativesNotAllowed < StandardError; end

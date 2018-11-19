@@ -28,4 +28,10 @@ class TestPositiveCalculator < Test::Unit::TestCase
     PositiveCalculator.new.add('//;\n1;2')
   end
 
+  def test_negatives
+    assert_raise NegativesNotAllowed do
+       PositiveCalculator.new.add('-2,1')
+    end
+  end
+
 end
