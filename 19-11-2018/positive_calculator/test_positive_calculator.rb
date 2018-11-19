@@ -34,4 +34,9 @@ class TestPositiveCalculator < Test::Unit::TestCase
     end
   end
 
+  def test_big_numbers
+    assert_equal 1,
+    PositiveCalculator.new.add('1,1001')
+  end
+
 end

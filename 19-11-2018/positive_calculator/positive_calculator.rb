@@ -10,6 +10,7 @@ class PositiveCalculator
       string_numbers = string_numbers.last
       string_numbers.split(delimiter).each do |element| 
         raise NegativesNotAllowed if element.to_f.negative?  
+        element = "0" if element.to_f > 1000
         sum += element.to_f
       end      
       sum
@@ -19,6 +20,7 @@ class PositiveCalculator
       raise NotEnoughNumbers if string_numbers.split(',').length <=1   
       string_numbers.split(',').each do |element| 
         raise NegativesNotAllowed if element.to_f.negative?
+        element = "0" if element.to_f > 1000
         sum += element.to_f
       end
       sum
