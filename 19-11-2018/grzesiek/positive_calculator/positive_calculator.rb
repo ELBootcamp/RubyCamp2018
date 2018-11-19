@@ -25,7 +25,7 @@ class PositiveCalculator
     else 
       sum = 0.0
       string_numbers = string_numbers.tr('\n', ',')
-      raise NotEnoughNumbers if string_numbers.split(',').length <= 1   
+      raise_error_if_not_enough_numbers(string_numbers)
       string_numbers.split(',').each do |element| 
         raise_error_if_negative_input(element)
         element = "0" if element.to_f > 1000
@@ -53,7 +53,7 @@ class PositiveCalculator
     else 
       subtract_sum = 0.0
       string_numbers = string_numbers.tr('\n', ',')
-      raise NotEnoughNumbers if string_numbers.split(',').length <=1   
+      raise_error_if_not_enough_numbers(string_numbers)
       string_numbers.split(',')[1..-1].each do |element| 
         raise NegativesNotAllowed if element.to_f.negative?
         p element.to_f
@@ -72,11 +72,10 @@ class PositiveCalculator
     raise NegativesNotAllowed if input.split(',').first.to_f.negative?
   end
 
+  def raise_error_if_not_enough_numbers(input)
+    raise NotEnoughNumbers if input.split(',').length <= 1
+  end
 end
-
-calc = PositiveCalculator.new
-
-calc.add('//;\n1;2')
 
 class NotEnoughNumbers < StandardError; end 
 class NegativesNotAllowed < StandardError; end
