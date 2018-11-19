@@ -5,6 +5,7 @@ class PositiveCalculator
       0
     else 
       sum = 0.0
+      string_numbers = string_numbers.tr('\n', ',')
       string_numbers.split(',').each do |element| 
         sum += element.to_f
       end

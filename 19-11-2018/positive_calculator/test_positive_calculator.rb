@@ -12,4 +12,9 @@ class TestPositiveCalculator < Test::Unit::TestCase
     PositiveCalculator.new.add('1,5,5,4,6s')
   end
 
+  def test_new_line_separator_support
+    assert_equal 6, 
+    PositiveCalculator.new.add('1\n2\n3')
+  end
+
 end
