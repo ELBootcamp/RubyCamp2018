@@ -16,7 +16,17 @@ module StringUtils
   #
   #   camelize('active_model')         # => "ActiveModel"
   #   camelize('active_model', :lower) # => "activeModel"
-  def camelize(term, uppercase_first_letter = true); end
+  def camelize(term, camel_case = true)
+    return nil unless term.is_a?(String)
+    camel_case = (camel_case != :lower)
+
+    term = term.strip.tr(' ', '_').split('_').map do |word|
+      word.downcase.capitalize
+    end
+
+    term[0] = term[0].downcase unless camel_case
+    term.join
+  end
 
   # Makes an underscored, lowercase form from the expression in the string.
   #
