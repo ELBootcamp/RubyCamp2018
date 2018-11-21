@@ -112,7 +112,9 @@ module StringUtils
   #   blank?(' a ')        # => false
   #   blank?('')           # => true
   #   blank?("   \t  \n ") # => true
-  def blank?(text); end
+  def blank?(text)
+    (text.strip.empty? || text.strip =~ /\s/) ? true : false
+  end
 
   # Returns the string, first removing all whitespace on both ends of
   # the string, and then changing remaining consecutive whitespace

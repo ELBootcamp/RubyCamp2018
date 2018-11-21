@@ -13,7 +13,7 @@ RSpec.describe StringUtils do
       end
 
       it 'returns true when the string contains only only whitespace' do
-        expect(subject.blank?('   \t  \n ')).to be true
+        expect(subject.blank?("   \t  \n ")).to be true
       end
     end
 
