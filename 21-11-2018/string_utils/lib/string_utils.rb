@@ -6,7 +6,10 @@ module StringUtils
   # E.g.
   #
   #   bangify('what?') # => 'what?!'
-  def bangify(text); end
+  def bangify(text); 
+    text.is_a?(String) || raise(ArgumentError)
+    text + "!"
+  end
 
   # By default, +camelize+ converts strings to UpperCamelCase. If the argument
   # to +camelize+ is set to <tt>:lower</tt> then +camelize+ produces
