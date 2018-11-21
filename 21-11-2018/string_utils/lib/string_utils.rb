@@ -1,3 +1,4 @@
+require 'byebug'
 module StringUtils
   module_function
 
@@ -71,7 +72,16 @@ module StringUtils
   #   ordinalize(1003)  # => "1003rd"
   #   ordinalize(-11)   # => "-11th"
   #   ordinalize(-1021) # => "-1021st"
-  def ordinalize(numeric); end
+  def ordinalize(numeric); 
+    numeric.nil? && raise(ArgumentError)
+    just_digits = numeric.tr("a-z","")
+    just_digits.length == 0 && raise(ArgumentError)
+    last_digit = just_digits[-1]
+    last_digit.to_i % 2 == 0  && (return just_digits + "nd")  
+    last_digit.to_i % 3 == 0 && (return just_digits + "rd")
+    (last_digit == "1") && (just_digits[-2] != "1")  && (return just_digits + "st")
+    just_digits + "th"
+  end
 
   # Fixes several punctuation problems.
   #
