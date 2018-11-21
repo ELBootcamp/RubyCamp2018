@@ -1,14 +1,14 @@
+require 'byebug'
+
 class PositiveCalculator
 
   def add(string_numbers)   
-    #raise NegativesNotAllowed if string_numbers.include? "-"
     return 0 if string_numbers.empty?
     string_numbers[0..1] == '//' && string_numbers = change_slash_to_comma(string_numbers)
     calculate_sum(string_numbers.tr('\n', ','))       
   end
 
   def subtract(string_numbers)
-    #raise NegativesNotAllowed if string_numbers.include? "-"
     return 0 if string_numbers.empty?
     string_numbers[0..1] == '//' && string_numbers = change_slash_to_comma(string_numbers)
     string_numbers = string_numbers.tr('\n', ',') 
@@ -31,6 +31,12 @@ class PositiveCalculator
     end
     sum
   end
+
+  def change_to_comma(string_to_change)
+    string_numbers[0..1] == '//' && string_numbers = change_slash_to_comma(string_numbers)
+    string_numbers = string_numbers.tr('\n', ',') 
+  end
+
 end
 
 class NotEnoughNumbers < StandardError; end 
