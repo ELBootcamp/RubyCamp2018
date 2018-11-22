@@ -59,7 +59,16 @@ module StringUtils
   #   titleize('x-men: the last stand')    # => "X Men: The Last Stand"
   #   titleize('TheManWithoutAPast')       # => "The Man Without A Past"
   #   titleize('raiders_of_the_lost_ark')  # => "Raiders Of The Lost Ark"
-  def titleize(word); end
+  def titleize(word); 
+    word.nil? && raise(ArgumentError)
+    word.empty? && (return "")
+    if (!word.include? " ") && (!word.include? "_")
+      return word.chars.map{ |char| (char.upcase == char) ? (" " + char) : char}.join("").lstrip
+    end
+    words = word.split((/[\s,_,-]/))
+    words.map(&:capitalize!)
+    words.join(" ")
+  end
 
   # Turns a number into an ordinal string used to denote the position in an
   # ordered sequence such as 1st, 2nd, 3rd, 4th.
