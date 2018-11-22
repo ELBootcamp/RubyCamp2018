@@ -99,7 +99,12 @@ module StringUtils
   #   normalize_punctuation(',,,  ')     # => ", "
   #   normalize_punctuation('a  ,  b')   # => "a, b"
   #   normalize_punctuation(' , a,,b ,') # => "a, b"
-  def normalize_punctuation(text); end
+  def normalize_punctuation(text)
+    return nil unless text.is_a?(String)
+
+    text = text.tr(',', ' ').strip.split(' ').join(', ')
+    text.empty? ? ', ' : text
+  end
 
   # Truncates the string to given length and adds an omission at the end.
   #
