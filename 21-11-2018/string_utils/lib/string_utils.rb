@@ -20,7 +20,17 @@ module StringUtils
   #
   #   camelize('active_model')         # => "ActiveModel"
   #   camelize('active_model', :lower) # => "activeModel"
-  def camelize(term, uppercase_first_letter = true); end
+  def camelize(term, camel_case = true)
+    return nil unless term.is_a?(String)
+    camel_case = (camel_case != :lower)
+
+    term = term.strip.tr(' ', '_').split('_').map do |word|
+      word.downcase.capitalize
+    end
+
+    term[0] = term[0].downcase unless camel_case
+    term.join
+  end
 
   # Makes an underscored, lowercase form from the expression in the string.
   #
@@ -55,7 +65,15 @@ module StringUtils
   #   humanize('author_id')                    # => "Author"
   #   humanize('author_id', capitalize: false) # => "author"
   #   humanize('_id')                          # => "Id"
-  def humanize(word, options = { capitalize: true }); end
+  def humanize(text, options = { capitalize: true })
+    return nil unless text.is_a?(String)
+
+    words = text.strip.split('_').reject(&:empty?).map { |word| word.downcase }
+    (words.last == 'id' && words.size >= 2) && (words.pop)
+
+    (options[:capitalize] && words.first) && words.first.capitalize!
+    words.join(' ')
+  end
 
   # Capitalizes all the words and replaces some characters (dashes and underscores)
   # in the string to create a nicer looking title.
@@ -110,7 +128,12 @@ module StringUtils
   #   normalize_punctuation(',,,  ')     # => ", "
   #   normalize_punctuation('a  ,  b')   # => "a, b"
   #   normalize_punctuation(' , a,,b ,') # => "a, b"
-  def normalize_punctuation(text); end
+  def normalize_punctuation(text)
+    return nil unless text.is_a?(String)
+
+    text = text.tr(',', ' ').strip.split(' ').join(', ')
+    text.empty? ? ', ' : text
+  end
 
   # Truncates the string to given length and adds an omission at the end.
   #
