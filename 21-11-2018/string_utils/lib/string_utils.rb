@@ -1,3 +1,4 @@
+require 'byebug'
 module StringUtils
   module_function
 
@@ -6,7 +7,10 @@ module StringUtils
   # E.g.
   #
   #   bangify('what?') # => 'what?!'
-  def bangify(text); end
+  def bangify(text); 
+    text.is_a?(String) || raise(ArgumentError)
+    text + "!"
+  end
 
   # By default, +camelize+ converts strings to UpperCamelCase. If the argument
   # to +camelize+ is set to <tt>:lower</tt> then +camelize+ produces
@@ -55,7 +59,16 @@ module StringUtils
   #   titleize('x-men: the last stand')    # => "X Men: The Last Stand"
   #   titleize('TheManWithoutAPast')       # => "The Man Without A Past"
   #   titleize('raiders_of_the_lost_ark')  # => "Raiders Of The Lost Ark"
-  def titleize(word); end
+  def titleize(word); 
+    word.nil? && raise(ArgumentError)
+    word.empty? && (return "")
+    if (!word.include? " ") && (!word.include? "_")
+      return word.chars.map{ |char| (char.upcase == char) ? (" " + char) : char}.join("").lstrip
+    end
+    words = word.split((/[\s,_,-]/))
+    words.map(&:capitalize!)
+    words.join(" ")
+  end
 
   # Turns a number into an ordinal string used to denote the position in an
   # ordered sequence such as 1st, 2nd, 3rd, 4th.
@@ -68,7 +81,16 @@ module StringUtils
   #   ordinalize(1003)  # => "1003rd"
   #   ordinalize(-11)   # => "-11th"
   #   ordinalize(-1021) # => "-1021st"
-  def ordinalize(numeric); end
+  def ordinalize(numeric); 
+    numeric.nil? && raise(ArgumentError)
+    just_digits = numeric.tr("a-z","")
+    just_digits.length == 0 && raise(ArgumentError)
+    last_digit = just_digits[-1]
+    last_digit.to_i % 2 == 0  && (return just_digits + "nd")  
+    last_digit.to_i % 3 == 0 && (return just_digits + "rd")
+    (last_digit == "1") && (just_digits[-2] != "1")  && (return just_digits + "st")
+    just_digits + "th"
+  end
 
   # Fixes several punctuation problems.
   #
