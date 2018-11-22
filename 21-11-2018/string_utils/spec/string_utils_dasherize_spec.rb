@@ -12,11 +12,11 @@ RSpec.describe StringUtils do
 
     context 'raising error' do
       it 'raises error when string is nil' do
-        expect { subject.underscore(nil) }.to raise_error(ArgumentError)
+        expect { subject.dasherize(nil) }.to raise_error(ArgumentError)
       end
 
-      it 'raises error when string is nil' do
-        expect { subject.underscore(nil) }.to raise_error("String doesn't contain any dashes.")
+      it 'print statement when string does not contain any underscores' do
+        expect { subject.dasherize('ab-de.A') }.to raise_error("String doesn't contain any dashes.")
       end
     end
   end

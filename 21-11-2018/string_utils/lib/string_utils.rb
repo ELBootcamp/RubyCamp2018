@@ -132,7 +132,11 @@ module StringUtils
   # Replaces underscores with dashes in the string.
   #
   #   dasherize('puni_puni') # => "puni-puni"
-  def dasherize(string); end
+  def dasherize(string)
+    string.nil? && raise(ArgumentError)
+    raise(ArgumentError.new("String doesn\'t contain any dashes.")) while !string.include?("_")
+    string.tr("_", "-")
+  end
 
   # Returns a new string with all occurrences of the patterns removed.
   #
