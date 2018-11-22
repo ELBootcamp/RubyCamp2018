@@ -54,7 +54,15 @@ module StringUtils
   #   humanize('author_id')                    # => "Author"
   #   humanize('author_id', capitalize: false) # => "author"
   #   humanize('_id')                          # => "Id"
-  def humanize(word, options = { capitalize: true }); end
+  def humanize(text, options = { capitalize: true })
+    return nil unless text.is_a?(String)
+
+    words = text.strip.split('_').reject(&:empty?).map { |word| word.downcase }
+    (words.last == 'id' && words.size >= 2) && (words.pop)
+
+    (options[:capitalize] && words.first) && words.first.capitalize!
+    words.join(' ')
+  end
 
   # Capitalizes all the words and replaces some characters (dashes and underscores)
   # in the string to create a nicer looking title.
