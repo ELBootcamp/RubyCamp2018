@@ -27,7 +27,14 @@ module StringUtils
   # E.g.:
   #
   #   underscore('ActiveModel') # => "active_model"
-  def underscore(camel_cased_word); end
+  def underscore(camel_cased_word)
+    camel_cased_word.nil? && raise(ArgumentError)
+    camel_cased_word.empty? && raise(ArgumentError.new("Empty string"))
+    underscored_lowercased_string = camel_cased_word.split('').map.with_index do |char, i|
+      (/[A-Z]/.match(char) && i != 0) ? "_" << char.downcase : char.downcase
+    end
+    underscored_lowercased_string.join('').tr(" ", "")
+  end
 
   # Tweaks an attribute name for display to end users.
   #
@@ -127,7 +134,9 @@ module StringUtils
   #   blank?(' a ')        # => false
   #   blank?('')           # => true
   #   blank?("   \t  \n ") # => true
-  def blank?(text); end
+  def blank?(text)
+    (text.strip.empty? || text.strip =~ /\s/) ? true : false
+  end
 
   # Returns the string, first removing all whitespace on both ends of
   # the string, and then changing remaining consecutive whitespace
@@ -145,7 +154,11 @@ module StringUtils
   # Replaces underscores with dashes in the string.
   #
   #   dasherize('puni_puni') # => "puni-puni"
-  def dasherize(string); end
+  def dasherize(string)
+    string.nil? && raise(ArgumentError)
+    raise(ArgumentError.new("String doesn\'t contain any dashes.")) while !string.include?("_")
+    string.tr("_", "-")
+  end
 
   # Returns a new string with all occurrences of the patterns removed.
   #
