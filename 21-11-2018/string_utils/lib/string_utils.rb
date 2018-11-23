@@ -158,7 +158,16 @@ module StringUtils
   #
   #   text_wrap('Once upon a time, in a kingdom called Far Far Away, a king fell ill, and finding a successor to the throne turned out to be more trouble than anyone could have imagined')
   #   # => "Once upon a time, in a kingdom\n called Far Far Away, a king f\nell ill, and finding a success\nor to the throne turned out to\n be more trouble than anyone c\nould have imagined"
-  def text_wrap(text, line_width = 5); end
+  def text_wrap(text, line_width)
+    return '' if text.empty?
+    return text if line_width.zero?  
+
+    line_width > 0 ? splitter(text, line_width) : splitter(text.reverse, line_width).reverse
+  end
+
+  def splitter(text, line_width)
+    text.chars.each_slice(line_width.abs).map(&:join).join("\n")
+  end
 
   # Checks whether given text is blank, i.e. contains only whitespace (spaces, tabs, enters etc.).
   #
