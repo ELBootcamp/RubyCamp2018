@@ -191,7 +191,9 @@ module StringUtils
   #   squish(%{ Multi-line
   #      string })                          # => "Multi-line string"
   #   squish(" foo   bar    \n   \t   boo") # => "foo bar boo"
-  def squish(text); end
+  def squish(text)
+    text.strip.split.join(' ')
+  end
 
   # Replaces underscores with dashes in the string.
   #
