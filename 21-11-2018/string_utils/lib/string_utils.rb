@@ -142,7 +142,15 @@ module StringUtils
   # E.g.:
   #
   #   truncate('Once upon a time in a world far far away') # => "Once upon a time in a world..."
-  def truncate(text); end
+  def truncate(text, length = 27)
+
+    (text.is_a?(String) || text.is_a?(Numeric)) ? text = text.to_s : (raise ArgumentError)
+
+    return '' if text.empty?
+    return text if (length > text.length || length.zero?)
+    
+    text[0..length-1] + '...'
+  end
 
   # Wraps the text into lines no longer than line_width width.
   #
