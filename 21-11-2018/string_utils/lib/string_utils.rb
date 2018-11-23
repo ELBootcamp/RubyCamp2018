@@ -7,9 +7,8 @@ module StringUtils
   # E.g.
   #
   #   bangify('what?') # => 'what?!'
-  def bangify(text); 
-    text.is_a?(String) || raise(ArgumentError)
-    text + "!"
+  def bangify(text)
+    text.is_a?(String) ? "#{text}!" : raise(ArgumentError)
   end
 
   # By default, +camelize+ converts strings to UpperCamelCase. If the argument
@@ -22,13 +21,12 @@ module StringUtils
   #   camelize('active_model', :lower) # => "activeModel"
   def camelize(term, camel_case = true)
     return nil unless term.is_a?(String)
-    camel_case = (camel_case != :lower)
 
     term = term.strip.tr(' ', '_').split('_').map do |word|
       word.downcase.capitalize
     end
 
-    term[0] = term[0].downcase unless camel_case
+    term.first.downcase! if camel_case == :lower
     term.join
   end
 
@@ -39,11 +37,11 @@ module StringUtils
   #   underscore('ActiveModel') # => "active_model"
   def underscore(camel_cased_word)
     camel_cased_word.nil? && raise(ArgumentError)
-    camel_cased_word.empty? && raise(ArgumentError.new("Empty string"))
-    underscored_lowercased_string = camel_cased_word.split('').map.with_index do |char, i|
-      (/[A-Z]/.match(char) && i != 0) ? "_" << char.downcase : char.downcase
-    end
-    underscored_lowercased_string.join('').tr(" ", "")
+    camel_cased_word.empty? && raise(ArgumentError.new('Empty string'))
+
+    camel_cased_word.split(/(?=[A-Z])/).map do |word|
+      word.downcase.strip
+    end.join('_')
   end
 
   # Tweaks an attribute name for display to end users.
@@ -66,13 +64,16 @@ module StringUtils
   #   humanize('author_id', capitalize: false) # => "author"
   #   humanize('_id')                          # => "Id"
   def humanize(text, options = { capitalize: true })
-    return nil unless text.is_a?(String)
+    return unless text.is_a?(String)
 
-    words = text.strip.split('_').reject(&:empty?).map { |word| word.downcase }
-    (words.last == 'id' && words.size >= 2) && (words.pop)
+    text.empty? ? '' : lala(text, options)
+  end
 
-    (options[:capitalize] && words.first) && words.first.capitalize!
-    words.join(' ')
+  def lala(text, options = { capitalize: true })
+    text.start_with?('_') && (text[0] = '')
+    words = text.strip.chomp('_id').split('_').map(&:downcase).join(' ')
+
+    options[:capitalize] ? words.capitalize! : words
   end
 
   # Capitalizes all the words and replaces some characters (dashes and underscores)
@@ -84,15 +85,14 @@ module StringUtils
   #   titleize('x-men: the last stand')    # => "X Men: The Last Stand"
   #   titleize('TheManWithoutAPast')       # => "The Man Without A Past"
   #   titleize('raiders_of_the_lost_ark')  # => "Raiders Of The Lost Ark"
-  def titleize(word); 
+  def titleize(word)
     word.nil? && raise(ArgumentError)
-    word.empty? && (return "")
-    if (!word.include? " ") && (!word.include? "_")
-      return word.chars.map{ |char| (char.upcase == char) ? (" " + char) : char}.join("").lstrip
-    end
-    words = word.split((/[\s,_,-]/))
-    words.map(&:capitalize!)
-    words.join(" ")
+
+    if word.include?(' ') || word.include?('_')
+      word.split(/[\s,_,-]/).map(&:capitalize)
+    else
+      word.split(/(?=[A-Z])/)
+    end.join(' ')
   end
 
   # Turns a number into an ordinal string used to denote the position in an
@@ -106,15 +106,17 @@ module StringUtils
   #   ordinalize(1003)  # => "1003rd"
   #   ordinalize(-11)   # => "-11th"
   #   ordinalize(-1021) # => "-1021st"
-  def ordinalize(numeric); 
-    numeric.nil? && raise(ArgumentError)
-    just_digits = numeric.tr("a-z","")
-    just_digits.length == 0 && raise(ArgumentError)
-    last_digit = just_digits[-1]
-    last_digit.to_i % 2 == 0  && (return just_digits + "nd")  
-    last_digit.to_i % 3 == 0 && (return just_digits + "rd")
-    (last_digit == "1") && (just_digits[-2] != "1")  && (return just_digits + "st")
-    just_digits + "th"
+  def ordinalize(numeric)
+    suffixes = {
+      '1' => 'st',
+      '2' => 'nd',
+      '3' => 'rd'
+    }
+
+    (!numeric || numeric.tr("a-z",'').length.zero?) && raise(ArgumentError)
+    suffix = numeric.chars[-2] != '1' ? suffixes[numeric.chars.last] : 'th'
+
+    "#{numeric}#{suffix}"
   end
 
   # Fixes several punctuation problems.
@@ -129,7 +131,7 @@ module StringUtils
   #   normalize_punctuation('a  ,  b')   # => "a, b"
   #   normalize_punctuation(' , a,,b ,') # => "a, b"
   def normalize_punctuation(text)
-    return nil unless text.is_a?(String)
+    return unless text.is_a?(String)
 
     text = text.tr(',', ' ').strip.split(' ').join(', ')
     text.empty? ? ', ' : text
@@ -158,7 +160,7 @@ module StringUtils
   #   blank?('')           # => true
   #   blank?("   \t  \n ") # => true
   def blank?(text)
-    (text.strip.empty? || text.strip =~ /\s/) ? true : false
+    (text.strip.empty? || text.strip =~ /\s/) || false
   end
 
   # Returns the string, first removing all whitespace on both ends of
@@ -179,8 +181,12 @@ module StringUtils
   #   dasherize('puni_puni') # => "puni-puni"
   def dasherize(string)
     string.nil? && raise(ArgumentError)
-    raise(ArgumentError.new("String doesn\'t contain any dashes.")) while !string.include?("_")
-    string.tr("_", "-")
+
+    unless string.include?('_')
+      raise(ArgumentError.new("String doesn\'t contain any dashes."))
+    end
+
+    string.tr('_', '-')
   end
 
   # Returns a new string with all occurrences of the patterns removed.
