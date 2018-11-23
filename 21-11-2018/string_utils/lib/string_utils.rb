@@ -214,5 +214,13 @@ module StringUtils
   #   remove(str, ' test')        # => 'foo bar'
   #   remove(str, ' test', /bar/) # => 'foo '
   #   str                         # => 'foo bar test'
-  def remove(*patterns); end
+  def remove(str, *patterns)
+    (raise ArgumentError) unless str.is_a?(String)
+    
+    patterns.each do |pattern| 
+      (raise ArgumentError) unless (pattern.is_a?(String) || pattern.is_a?(Regexp))
+      str = str.gsub(pattern, "")
+    end
+    str
+  end
 end
