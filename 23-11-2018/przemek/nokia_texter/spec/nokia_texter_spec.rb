@@ -18,7 +18,7 @@ RSpec.describe NokiaTexter do
 
     it 'handles ASCII and UNICODE whitespaces' do
       nokia_texter = NokiaTexter.new("There\n are different \t whiTespaceS...")
-      expect(nokia_texter.squeeze).to eq('THEREAreDifferentWhitespaces...')
+      expect(nokia_texter.squeeze).to eq('THEREareDifferentwhitespaces...')
     end
 
     it 'raises an ArgumentError if input not a string' do
