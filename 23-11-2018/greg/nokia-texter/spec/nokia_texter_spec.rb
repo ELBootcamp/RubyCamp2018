@@ -13,14 +13,14 @@ RSpec.describe NokiaTexter do
       expect(NokiaTexter.new('ZrobZakupyWyrzucSmieci').squeeze).to eq('ZrobZakupyWyrzucSmieci') 
     end
 
-    it 'handles ASCII and UNICODE whitespaces' does
-      expect(NokiaTexter.new('zaraz\n wracam').squeeze).to eq('ZARAZwracam')
+    it 'handles ASCII and UNICODE whitespaces' do
+      expect(NokiaTexter.new("zaraz\n wracam").squeeze).to eq('ZARAZwracam')
     end
 
     it 'raises MessageTooLong error when squeezed text length is longer than 160 chars' do
       expect { NokiaTexter.new("Nie czekaj z kolacja. Jutro też. I pojutrze. \
-        W ogóle to wrócę za tydzień. Chyba, że zmienię zdanie. Z resztą, nieważne. Pa." *2 }.squeeze)
-      .to raise_error(MessageTooLong)
+        W ogóle to wrócę za tydzień. Chyba, że zmienię zdanie. Z resztą, nieważne. Pa." *2).squeeze }
+        .to raise_error(MessageTooLong)
     end
 
     it 'returns empty string when if empty string is provided' do
