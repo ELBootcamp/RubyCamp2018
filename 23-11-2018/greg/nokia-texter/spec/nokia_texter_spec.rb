@@ -6,7 +6,7 @@ RSpec.describe NokiaTexter do
     it 'returns squeezed text' do
       expect(NokiaTexter.new('zaraz wracam').squeeze).to eq('ZARAZwracam')
       expect(NokiaTexter.new('Nie czekaj z kolacja.').squeeze)
-      .to eq('NIEczekajZKolacja.')
+      .to eq('NIEczekajZkolacja.')
     end
 
     it 'returns original text when it does not include any spaces' do

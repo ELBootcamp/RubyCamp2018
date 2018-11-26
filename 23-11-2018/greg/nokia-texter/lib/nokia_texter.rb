@@ -9,22 +9,15 @@ class NokiaTexter
 
   def squeeze
     text.is_a?(Numeric) && raise(ArgumentError)
-    return text if text.empty?
-    
-    text.split(' ').map.with_index do |word, index|
-      transform_text(word, index)
+    return text unless text.include? (' ')
+
+    transformed_text = text.split(' ').map.with_index do |word, index|
+      index % 2 == 0 ? word.upcase : word.downcase
     end.join
     
-    text.length > 160 && (raise MessageTooLong)
-    text
+    transformed_text.length > 160 && (raise MessageTooLong)
+    transformed_text
   end
-
-  private
-
-  def transform_text(word, index)
-    index == 0 ? word.upcase : word.capitalize
-  end
-  
 end
 
 class MessageTooLong < StandardError; end
