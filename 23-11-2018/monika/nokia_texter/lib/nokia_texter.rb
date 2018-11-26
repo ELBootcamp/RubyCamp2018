@@ -12,15 +12,11 @@ class NokiaTexter
     return text if text.empty? || !text.include?(' ')
     
     words = text.split(' ')
-    words.length < 2 && words[1] = ''
-    capitalize_words_in_array(words)
-  end
-
-  def capitalize_words_in_array(words)
-
-    ending = words.length > 2 ? words[2..-1].map(&:capitalize).join('') : ''
-    words[0].upcase + words[1] + ending
+    words.each_with_index.map do |word, index| 
+      index.even? ? word.upcase : word.downcase
+    end.join
   end
 end
 
-class MessageTooLong < StandardError;end
+
+class MessageTooLong < StandardError; end
