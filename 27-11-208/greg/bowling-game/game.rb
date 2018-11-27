@@ -7,7 +7,7 @@ class Game
   attr_accessor :frames
 
   def roll(pins)
-    frames << [] if frames.last.size >= 2
+    frames << [] if frames.last.size >= 2 || frames.last.include?(10)
     frames.last << pins
   end
 
