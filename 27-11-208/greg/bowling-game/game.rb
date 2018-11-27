@@ -12,4 +12,8 @@ class Game
     frames.last << pins
   end
 
+  def score
+    frames.flatten.reduce(&:+)
+  end
+
 end
