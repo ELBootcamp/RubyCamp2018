@@ -18,4 +18,9 @@ RSpec.describe Game do
     expect(subject.frames).to eq([[10], [3, 4]])
   end
 
+  it 'raises ArgumentError when sum of pins in one frame is larger than 10' do
+    subject.roll(2)
+    expect { subject.roll(10) }.to raise_error(ArgumentError)
+  end
+
 end
