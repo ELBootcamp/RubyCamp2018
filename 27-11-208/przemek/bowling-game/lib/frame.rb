@@ -24,10 +24,14 @@ class Frame
   def bonus(frame)
     bonus_score = 0
     if(frame.strike?)
-      bonus_score += values.reduce(:+)
+      bonus_score += values[0..1].reduce(:+)
     elsif(frame.spare?)
       bonus_score += values.first
     end
     bonus_score
+  end
+
+  def result
+    values.reduce(0, :+)
   end
 end

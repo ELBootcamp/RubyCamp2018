@@ -20,4 +20,14 @@ RSpec.describe BowlingGame do
     subject.roll(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 1)
     expect(subject.score).to eq(61)
   end
+
+  it 'check if BowlingGame#score handles 10th frame correcly' do
+    game_10th_spare = BowlingGame.new
+    game_10th_spare.roll(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 1, 7, 3, 6, 4, 10, 2, 8, 6)
+
+    game_10th_strike = BowlingGame.new
+    game_10th_strike.roll(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 1, 7, 3, 6, 4, 10, 10, 6)
+    expect(game_10th_spare.score).to eq(133)
+    expect(game_10th_strike.score).to eq(139)
+  end
 end
