@@ -4,4 +4,8 @@ class Frame
   def initialize
     @values = []
   end
+
+  def add_pin_num(pin_num)
+    values.push(pin_num)
+  end
 end
