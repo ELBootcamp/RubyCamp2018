@@ -39,5 +39,12 @@ RSpec.describe Game do
        subject.roll(2)
        expect(subject.scoring).to eq(4)
     end
+    it 'returns correct scoring value for four rolls' do
+      subject.roll(2)
+      subject.roll(2)
+      subject.roll(3)
+      subject.roll(1)
+      expect(subject.scoring).to eq(8)
+   end
   end
 end
