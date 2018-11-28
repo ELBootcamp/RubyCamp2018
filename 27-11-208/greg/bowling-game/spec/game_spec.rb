@@ -23,6 +23,27 @@ RSpec.describe Game do
       subject.roll(2)
       expect { subject.roll(10) }.to raise_error(ArgumentError)
     end
+
+    it 'checks if there are three rolls when player hits the spare in tenth frame' do
+      18.times do 
+        subject.roll(2)
+      end
+      subject.roll(9)
+      subject.roll(1)
+      subject.roll(1)
+      expect(subject.frames)
+      .to eq([[2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [9, 1, 1]])
+    end
+
+    it 'checks if there are three rolls when player hits the strike in tenth frame' do
+      18.times do 
+        subject.roll(2)
+      end
+      subject.roll(10)
+      subject.roll(1)
+      expect(subject.frames)
+      .to eq([[2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [10, 1]])
+    end
   end
 
   describe '#score' do
