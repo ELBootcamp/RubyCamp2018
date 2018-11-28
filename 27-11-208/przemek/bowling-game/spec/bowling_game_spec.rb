@@ -15,4 +15,9 @@ RSpec.describe BowlingGame do
     subject.roll(5, 4, 10, 3, 4)
     expect(subject.frames).to eq([[5, 4], [10], [3, 4]])
   end
+
+  it 'check if BowlingGame#score return proper value for 6 rolls' do
+    subject.roll(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 1)
+    expect(subject.score).to eq(61)
+  end
 end
