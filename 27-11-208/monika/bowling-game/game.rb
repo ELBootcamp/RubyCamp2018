@@ -27,8 +27,9 @@ class Game
 
   def scoring
     round.zero? && (return @scoring)
+    
     @frames.each do |key, value|
-      value.frame_sum = frame[key+1].values[0] if value.is_spare
+      value.frame_sum += frames[key + 1].values[0] if value.is_spare
       @scoring += value.frame_sum
     end
     @scoring
