@@ -15,4 +15,8 @@ class Frame
     # byebug
     values[0..1].reduce(:+) == 10 && !values[1].nil?
   end
+
+  def strike?
+    values.first == 10 && values[1].nil?
+  end
 end

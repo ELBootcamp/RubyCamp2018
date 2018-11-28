@@ -28,4 +28,21 @@ RSpec.describe Frame do
     expect(frame_without_spare.spare?).to eq(false)
     expect(frame_with_strike.spare?).to eq(false)
   end
+
+  it 'checks if #strike? returns proper result' do
+    frame_with_strike = Frame.new
+    frame_with_strike.add_pin_num(10)
+
+    frame_without_strike = Frame.new
+    frame_without_strike.add_pin_num(4)
+    frame_without_strike.add_pin_num(4)
+
+    frame_with_spare = Frame.new
+    frame_with_spare.add_pin_num(4)
+    frame_with_spare.add_pin_num(6)
+
+    expect(frame_with_strike.strike?).to eq(true)
+    expect(frame_without_strike.strike?).to eq(false)
+    expect(frame_with_spare.strike?).to eq(false)
+  end
 end
