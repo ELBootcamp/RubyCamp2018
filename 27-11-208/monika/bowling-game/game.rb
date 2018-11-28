@@ -5,33 +5,37 @@ class Game
   def initialize
     @round = 0
     @counter = 0
+    @first = true
     @frames = {}
     @scoring = 0
   end
 
-  attr_accessor :round, :counter, :scoring, :frames
+  attr_accessor :round, :counter, :scoring, :frames, :first
 
   def roll(pins)
-    if @counter.zero? && pins != 10
+    if @first && pins != 10
       @counter = pins
+      @first = false
     else
       @round += 1
-      frame = Frame.new(@round)
+      frame = Frame.new
       frame.values = pins == 10 ? [pins] : [@counter, pins]
       frame.check_ten
-      @counter = 0
       @frames[@round] = frame
+      @first = true
       frame
     end
   end
 
   def scoring
     round.zero? && (return @scoring)
-    
     @frames.each do |key, value|
-      value.frame_sum += frames[key + 1].values[0] if value.is_spare
-      value.frame_sum += frames[key + 1].frame_sum if value.is_strike
+      if key != round
+        value.frame_sum += frames[key + 1].values[0] if value.is_spare
+        value.frame_sum += frames[key + 1].frame_sum if value.is_strike
+      end
       @scoring += value.frame_sum
+      byebug
     end
     @scoring
   end

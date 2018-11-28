@@ -28,6 +28,19 @@ RSpec.describe Game do
       subject.roll(7)
       expect(subject.roll(1).values).to eq([7,1])
     end 
+    it 'creates six frames including strike' do
+      subject.roll(1)
+      expect(subject.roll(4).values).to eq([1,4])
+      subject.roll(4)
+      expect(subject.roll(5).values).to eq([4,5])
+      subject.roll(6)
+      expect(subject.roll(4).values).to eq([6,4])
+      subject.roll(5)
+      expect(subject.roll(5).values).to eq([5,5])
+      expect(subject.roll(10).values).to eq([10])
+      subject.roll(0)
+      expect(subject.roll(1).values).to eq([0,1])
+    end
   end
 
   context "checks scoring calculation" do   
@@ -53,13 +66,32 @@ RSpec.describe Game do
       subject.roll(1)
       expect(subject.scoring).to eq(17)
     end
-    it 'returns correct scoring value for four rolls including strike' do
+    it 'returns correct scoring value for five rolls including strike' do
       subject.roll(1)
       subject.roll(4)
       subject.roll(10)
       subject.roll(1)
       subject.roll(4)
       expect(subject.scoring).to eq(25)
+    end
+    it 'returns correct scoring value for ten rolls including strike and spare' do
+      subject.roll(1)
+      subject.roll(4)
+      subject.roll(4)
+      subject.roll(5)
+      subject.roll(6)
+      subject.roll(4)
+      subject.roll(5)
+      subject.roll(5)
+      subject.roll(10)
+      subject.roll(0)
+      subject.roll(1)
+      subject.roll(7)
+      subject.roll(3)
+      subject.roll(6)
+      subject.roll(4)
+      subject.roll(10)
+      expect(subject.scoring).to eq(107)
     end
   end
 end
