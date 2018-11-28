@@ -12,6 +12,8 @@ class BowlingGame
     pins_num.each do |pin|
       frames.push(Frame.new) if (frames.last.values.size >= 2 || frames.last.strike?) && frames.size < 10
       frames.last.add_pin_num(pin)
+
+      (raise ArgumentError) if frames.size >= 10 && frames.last.values.size > 3
     end
   end
 

@@ -30,4 +30,11 @@ RSpec.describe BowlingGame do
     expect(game_10th_spare.score).to eq(133)
     expect(game_10th_strike.score).to eq(139)
   end
+
+  # it 'raises an ArgumentError if there are more than 10 frames' do
+  # end
+
+  it 'raises an ArgumentError if 10th frame contains more than 3 values' do
+    expect { subject.roll(1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 1, 7, 3, 6, 4, 10, 2, 8, 6, 2) }.to raise_error(ArgumentError)
+  end
 end
