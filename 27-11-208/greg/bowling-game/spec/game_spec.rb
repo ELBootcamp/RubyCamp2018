@@ -41,6 +41,14 @@ RSpec.describe Game do
       subject.roll(6)
       expect(subject.score).to eq(23)
     end
+
+    it 'checks if score returns good result after knocking down strike' do
+      subject.roll(10)
+      subject.roll(7)
+      subject.roll(2)
+      expect(subject.score).to eq(28)
+    end
+
   end
 
 end

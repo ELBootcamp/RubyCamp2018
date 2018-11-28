@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Game
 
   def initialize
@@ -13,9 +15,27 @@ class Game
   end
 
   def score
-    frames.map do |frame|
-      frame.reduce(&:+) == 10 ? frame.last + frame.reduce(&:+) : frame.reduce(&:+)
+    
+    frames.map.with_index do |frame, index|
+      if hit_spare?(frame)
+        frame.last + frame.reduce(&:+)
+      elsif hit_strike?(frame)
+        frame.reduce(&:+) + frames[index+1].reduce(&:+)
+      else
+        frame.reduce(&:+)
+      end
     end.reduce(&:+)
+    
+  end
+
+  private 
+  
+  def hit_spare?(frame)
+    frame.size == 2 && frame.reduce(&:+) == 10
+  end
+
+  def hit_strike?(frame)
+    frame.size == 1 && frame.reduce(&:+) == 10
   end
 
 end
