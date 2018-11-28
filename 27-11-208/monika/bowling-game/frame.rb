@@ -1,7 +1,6 @@
 class Frame 
 
-  def initialize(round = 0)
-    @round = round
+  def initialize
     @values = []
     @is_strike = false
     @is_spare = false
