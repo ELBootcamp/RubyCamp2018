@@ -30,6 +30,7 @@ class Game
     
     @frames.each do |key, value|
       value.frame_sum += frames[key + 1].values[0] if value.is_spare
+      value.frame_sum += frames[key + 1].frame_sum if value.is_strike
       @scoring += value.frame_sum
     end
     @scoring
