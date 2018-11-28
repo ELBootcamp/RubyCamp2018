@@ -136,6 +136,35 @@ RSpec.describe Game do
       expect(subject.score).to eq(139)
     end
 
+    it 'checks if score returns good result after tenth frame when player rolled a double strike' do
+      subject.roll(1)
+      subject.roll(4)
+      subject.roll(4)
+      subject.roll(5)
+      subject.roll(6)
+      subject.roll(4)
+      subject.roll(5)
+      subject.roll(5)
+      subject.roll(10)
+      subject.roll(0)
+      subject.roll(1)
+      subject.roll(7)
+      subject.roll(3)
+      subject.roll(6)
+      subject.roll(4)
+      subject.roll(10)
+      subject.roll(10)
+      subject.roll(10)
+      expect(subject.score).to eq(147)
+    end
+
+    it 'checks if score returns good result after twelve strikes in a row' do
+      12.times do 
+        subject.roll(10)
+      end
+      expect(subject.score).to eq(300)
+    end
+
   end
 
 end

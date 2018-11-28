@@ -9,40 +9,50 @@ class Game
   attr_accessor :frames
 
   def roll(pins)
-    if frames.size <= 9
-      frames << [] if frames.last.size >= 2 || frames.last.include?(10)
-      (frames.last.reduce(0, :+) + pins) > 10 && raise(ArgumentError)
-      frames.last << pins
-    else
-      frames.last << pins
-    end
+    frames.size <= 9 ? handle_rolls(frames, pins) : frames.last << pins
   end
 
   def score
     scores = frames.map.with_index do |frame, index|
-      if hit_spare?(frame)
-        frame.reduce(&:+) + frames[index+1].first
-      elsif hit_strike?(frame)
-        handle_strike_score(frame, frames[index+1])
-      else
-        frame.reduce(&:+)
-      end
-    end.reduce(&:+)
+      frame_sum = frame.reduce(:+)
+      score_frame(frame, frame_sum, index)
+    end
+    scores.reduce(:+)
   end
 
   private 
-  
+
+  def handle_rolls(frames, pins)
+    frames << [] if frames.last.size >= 2 || frames.last.include?(10)
+    (frames.last.reduce(0, :+) + pins) > 10 && raise(ArgumentError)
+    frames.last << pins
+  end
+
+  def score_frame(frame, frame_sum, index)
+    if hit_spare?(frame)
+      frame_sum + frames[index+1].first
+    elsif hit_strike?(frame)
+      handle_strike_score(frame, frames[index+1], index)
+    else
+      frame_sum
+    end
+  end
+
   def hit_spare?(frame)
-    frame.size == 2 && frame.reduce(&:+) == 10
+    frame.size == 2 && frame.reduce(:+) == 10
   end
 
   def hit_strike?(frame)
     frame.size == 1
   end
 
-  def handle_strike_score(frame, next_frame)
-    return 10 if next_frame.nil?
-    frame.first + next_frame[0..1].reduce(0, :+)
+  def handle_strike_score(frame, next_frame, index)
+    return frame.first if next_frame.nil?
+    if hit_strike?(next_frame)
+      frame.first + next_frame.reduce(0, :+) + frames[index + 2].first
+    else
+      frame.first + next_frame[0..1].reduce(0, :+)
+    end
   end
 
 end
