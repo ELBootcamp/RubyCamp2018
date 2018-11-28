@@ -12,11 +12,7 @@ RSpec.describe BowlingGame do
   end
 
   it 'checks if correct frames are added when roll result in strike' do
-    subject.roll(5)
-    subject.roll(4)
-    subject.roll(10)
-    subject.roll(3)
-    subject.roll(4)
+    subject.roll(5, 4, 10, 3, 4)
     expect(subject.frames).to eq([[5, 4], [10], [3, 4]])
   end
 end
