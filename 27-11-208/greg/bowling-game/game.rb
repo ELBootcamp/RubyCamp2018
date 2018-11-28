@@ -13,7 +13,9 @@ class Game
   end
 
   def score
-    frames.flatten.reduce(&:+)
+    frames.map do |frame|
+      frame.reduce(&:+) == 10 ? frame.last + frame.reduce(&:+) : frame.reduce(&:+)
+    end.reduce(&:+)
   end
 
 end

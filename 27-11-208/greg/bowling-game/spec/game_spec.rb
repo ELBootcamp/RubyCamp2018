@@ -27,9 +27,19 @@ RSpec.describe Game do
 
   describe '#score' do
     it 'checks if score returns good result' do
-      subject.roll(3)
+      subject.roll(1)
       subject.roll(4)
-      expect(subject.score).to eq(7)
+      expect(subject.score).to eq(5)
+      subject.roll(4)
+      subject.roll(5)
+      expect(subject.score).to eq(14)
+    end
+
+    it 'checks if score returns good result after knocking down a spare' do
+      subject.roll(3)
+      subject.roll(7)
+      subject.roll(6)
+      expect(subject.score).to eq(23)
     end
   end
 
