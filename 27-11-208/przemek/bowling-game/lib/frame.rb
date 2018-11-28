@@ -19,4 +19,15 @@ class Frame
   def strike?
     values.first == 10 && values[1].nil?
   end
+
+  # Maybe self.bonus(frame, bonus_frame) ?
+  def bonus(frame)
+    bonus_score = 0
+    if(frame.strike?)
+      bonus_score += values.reduce(:+)
+    elsif(frame.spare?)
+      bonus_score += values.first
+    end
+    bonus_score
+  end
 end

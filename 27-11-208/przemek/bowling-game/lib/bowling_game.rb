@@ -18,17 +18,16 @@ class BowlingGame
   def score
     frames.each.with_index.reduce(0) do |sum, (frame, index)|
       frame_score = frame.values.reduce(:+)
-      if(frame.strike?)
-        frame_score += self.frames[index + 1].values.reduce(:+)
-      elsif (frame.spare?)
-        frame_score += self.frames[index + 1].values.first
-      end
-      
+      frame_score += next_frame(index).bonus(frame) unless next_frame(index).nil?
       sum += frame_score
     end
   end
 
   def frames_to_array
     frames.reduce([]) { |sum, frame|  sum.push(frame.values) }
+  end
+
+  def next_frame(index)
+    self.frames[index + 1]
   end
 end

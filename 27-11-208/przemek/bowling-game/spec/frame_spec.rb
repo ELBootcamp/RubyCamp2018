@@ -45,4 +45,15 @@ RSpec.describe Frame do
     expect(frame_without_strike.strike?).to eq(false)
     expect(frame_with_spare.strike?).to eq(false)
   end
+
+  it 'check if #bonus return proper result' do
+    subject.add_pin_num(4)
+    subject.add_pin_num(5)
+
+    bonus_frame = Frame.new
+    bonus_frame.add_pin_num(5)
+    bonus_frame.add_pin_num(5)
+
+    expect(subject.bonus(bonus_frame)).to eq(4)
+  end
 end
