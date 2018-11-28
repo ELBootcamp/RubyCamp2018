@@ -10,12 +10,12 @@ class Game
   attr_accessor :round, :counter
 
   def roll(pins)
-    if @counter.zero? || pins == 10 
+    if @counter.zero? && pins != 10
       @counter = pins
     else
       @round += 1
       frame = Frame.new(@round)
-      frame.values = [@counter, pins]
+      frame.values = pins == 10 ? [pins] : [@counter, pins]
       frame.check_ten
       @counter = 0
       p frame

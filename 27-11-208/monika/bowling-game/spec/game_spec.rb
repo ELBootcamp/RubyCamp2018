@@ -14,6 +14,11 @@ RSpec.describe Game do
       subject.roll(1)
       expect(subject.roll(4).values).to eq([1,4])
     end 
+    it 'creates two frames and in first frame is strike' do
+      expect(subject.roll(10).values).to eq([10])
+      subject.roll(1)
+      expect(subject.roll(4).values).to eq([1,4])
+    end 
   end
 
   context "checks scoring calculation" do   
