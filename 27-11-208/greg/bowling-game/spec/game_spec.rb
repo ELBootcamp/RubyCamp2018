@@ -39,6 +39,7 @@ RSpec.describe Game do
       subject.roll(3)
       subject.roll(7)
       subject.roll(6)
+      subject.roll(1)
       expect(subject.score).to eq(23)
     end
 
@@ -47,6 +48,26 @@ RSpec.describe Game do
       subject.roll(7)
       subject.roll(2)
       expect(subject.score).to eq(28)
+    end
+
+    it 'checks if score returns good result after nine frames' do
+      subject.roll(1)
+      subject.roll(4)
+      subject.roll(4)
+      subject.roll(5)
+      subject.roll(6)
+      subject.roll(4)
+      subject.roll(5)
+      subject.roll(5)
+      subject.roll(10)
+      subject.roll(0)
+      subject.roll(1)
+      subject.roll(7)
+      subject.roll(3)
+      subject.roll(6)
+      subject.roll(4)
+      subject.roll(10)
+      expect(subject.score).to eq(107)
     end
 
   end

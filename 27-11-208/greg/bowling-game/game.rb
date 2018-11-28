@@ -16,15 +16,17 @@ class Game
 
   def score
     
-    frames.map.with_index do |frame, index|
+    scores = frames.map.with_index do |frame, index|
       if hit_spare?(frame)
-        frame.last + frame.reduce(&:+)
+        frame.reduce(&:+) + frames[index+1].first
       elsif hit_strike?(frame)
-        frame.reduce(&:+) + frames[index+1].reduce(&:+)
+        handle_strike_score(frame, frames[index+1])
       else
         frame.reduce(&:+)
       end
-    end.reduce(&:+)
+    end
+    
+    scores.reduce(&:+)
     
   end
 
@@ -35,7 +37,12 @@ class Game
   end
 
   def hit_strike?(frame)
-    frame.size == 1 && frame.reduce(&:+) == 10
+    frame.size == 1
+  end
+
+  def handle_strike_score(frame, next_frame)
+    return 10 if next_frame.nil?
+    frame.reduce(&:+) + next_frame.reduce(0, :+)
   end
 
 end
