@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Frame
   attr_accessor :values
 
@@ -7,5 +9,10 @@ class Frame
 
   def add_pin_num(pin_num)
     values.push(pin_num)
+  end
+
+  def spare?
+    # byebug
+    values[0..1].reduce(:+) == 10 && !values[1].nil?
   end
 end
