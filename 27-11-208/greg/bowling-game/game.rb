@@ -14,14 +14,11 @@ class Game
       (frames.last.reduce(0, :+) + pins) > 10 && raise(ArgumentError)
       frames.last << pins
     else
-
-
       frames.last << pins
     end
   end
 
   def score
-    
     scores = frames.map.with_index do |frame, index|
       if hit_spare?(frame)
         frame.reduce(&:+) + frames[index+1].first
@@ -30,9 +27,7 @@ class Game
       else
         frame.reduce(&:+)
       end
-    end
-    scores.reduce(&:+)
-    
+    end.reduce(&:+)
   end
 
   private 
@@ -47,7 +42,7 @@ class Game
 
   def handle_strike_score(frame, next_frame)
     return 10 if next_frame.nil?
-    frame.reduce(&:+) + next_frame.reduce(0, :+)
+    frame.first + next_frame[0..1].reduce(0, :+)
   end
 
 end
