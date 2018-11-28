@@ -44,6 +44,17 @@ RSpec.describe Game do
       expect(subject.frames)
       .to eq([[2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [10, 1]])
     end
+
+    it 'checks if there are three rolls when player hits 3 strikes in tenth frame' do
+      18.times do 
+        subject.roll(2)
+      end
+      subject.roll(10)
+      subject.roll(10)
+      subject.roll(10)
+      expect(subject.frames)
+      .to eq([[2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [10, 10, 10]])
+    end
   end
 
   describe '#score' do
@@ -164,7 +175,6 @@ RSpec.describe Game do
       end
       expect(subject.score).to eq(300)
     end
-
   end
 
 end
