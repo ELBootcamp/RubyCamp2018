@@ -7,7 +7,7 @@ class Frame
   end
   attr_accessor :values, :is_strike, :is_spare, :frame_sum, :frame_sum_strike
 
-  def check_ten
+  def set_frame_values
     if values.reduce(0, :+) >= 10
       values.length == 1 ? @is_strike = true : @is_spare = true
     end

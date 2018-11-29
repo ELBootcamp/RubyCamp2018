@@ -22,29 +22,28 @@ class Game
     @round += 1 if round != 10
     frame = Frame.new
     frame.values = pins == 10 ? [pins] : [@first_element, pins]
-    frame.check_ten
+    frame.set_frame_values
     frames[@round] = frame
     @first_element = nil if round != 10
     frame
   end
 
   def game_over
-    @frames[@round].values.length == 3
+    frames[round].values.length == 3
   end
 
   def tenth_round_add_rolls(pins)
-    return false if @frames[10].nil?
+    return false if frames[10].nil?
     
-    @frames[10]
-    @frames[10].values.push(pins)
-    @frames[10].check_ten
+    frames[10].values.push(pins)
+    frames[10].set_frame_values
     true
   end
 
   def scoring
     round.zero? && (return @scoring)
 
-    @frames.each do |key, value|
+    frames.each do |key, value|
       if key != round
         value.frame_sum += get_bonus_for_spare(key + 1) if value.is_spare
         value.frame_sum += get_bonus_for_strike(key + 1) if value.is_strike
