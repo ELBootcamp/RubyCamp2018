@@ -14,8 +14,7 @@ class Game
 
   def score
     scores = frames.map.with_index do |frame, index|
-      frame_sum = frame.reduce(:+)
-      score_frame(frame, frame_sum, index)
+        score_frame(frame, index)
     end.reduce(:+)
   end
 
@@ -27,7 +26,8 @@ class Game
     frames.last << pins
   end
 
-  def score_frame(frame, frame_sum, index)
+  def score_frame(frame, index)
+    frame_sum = frame.reduce(:+)
     case
     when hit_spare?(frame) then frame_sum + frames[index+1].first
     when hit_strike?(frame) then handle_strike_score(frame.first, frames[index+1], index)
