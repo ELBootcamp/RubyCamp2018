@@ -11,8 +11,7 @@ class BowlingGame
   def roll(pin_num)
       frames.push(Frame.new) if create_frame?
       frames.last.add_pin_num(pin_num)
-
-      (raise ArgumentError) if frames.size >= 10 && frames.last.values.size > 3
+      (raise ArgumentError) if frames.size >= 10 && frames.last.pin_num > 3
   end
 
   def score
@@ -28,10 +27,10 @@ class BowlingGame
   end
 
   def next_frame(index)
-    self.frames[index + 1]
+    frames[index + 1]
   end
 
   def create_frame?
-    (frames.last.values.size >= 2 || frames.last.strike?) && frames.size < 10
+    (frames.last.pin_num >= 2 || frames.last.strike?) && frames.size < 10
   end
 end

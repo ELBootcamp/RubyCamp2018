@@ -1,5 +1,3 @@
-require 'byebug'
-
 class Frame
   attr_accessor :values
 
@@ -12,7 +10,6 @@ class Frame
   end
 
   def spare?
-    # byebug
     values[0..1].reduce(:+) == 10 && !values[1].nil?
   end
 
@@ -22,10 +19,10 @@ class Frame
 
   def bonus(next_frame)
     bonus_score = 0
-    if(self.strike?)
+    if(strike?)
       bonus_score += next_frame.values[0..1].reduce(:+)
-      bonus_score += 10 if !next_frame.nil? && next_frame.strike? 
-    elsif(self.spare?)
+      bonus_score += next_frame.values.first if !next_frame.nil? && next_frame.strike? 
+    elsif(spare?)
       bonus_score += next_frame.values.first
     end
     bonus_score
@@ -33,5 +30,9 @@ class Frame
 
   def result
     values.reduce(0, :+)
+  end
+
+  def pin_num
+    values.size
   end
 end
