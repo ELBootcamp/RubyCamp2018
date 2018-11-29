@@ -9,10 +9,10 @@ class Frame
 
   def set_frame_values
     if values.reduce(0, :+) >= 10
-      values.length == 1 ? @is_strike = true : @is_spare = true
+      values.length == 1 ? self.is_strike = true : self.is_spare = true
     end
-    @frame_sum_strike = values[0..1].reduce(0, :+)
-    @frame_sum = values.reduce(0, :+)
+    self.frame_sum_strike = values[0..1].reduce(0, :+)
+    self.frame_sum = values.reduce(0, :+)
   end
 end
 
