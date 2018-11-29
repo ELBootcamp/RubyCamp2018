@@ -20,10 +20,10 @@ class Frame
   def bonus(next_frame)
     return 0 if next_frame.nil?
     bonus_score = 0
-    if(strike?)
+    if strike?
       bonus_score += next_frame.values[0..1].reduce(:+)
       bonus_score += next_frame.values.first if !next_frame.nil? && next_frame.strike? 
-    elsif(spare?)
+    elsif spare?
       bonus_score += next_frame.values.first
     end
     bonus_score
