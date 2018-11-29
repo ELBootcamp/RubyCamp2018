@@ -1,36 +1,26 @@
 require 'byebug'
-require_relative 'frame'
+require_relative 'frames_manager'
 
 class BowlingGame
-  attr_accessor :frames
+  attr_accessor :frames_manager
   
   def initialize
-    @frames = [Frame.new]
+    @frames_manager = FramesManager.new
   end
 
   def roll(pin_num)
-      frames.push(Frame.new) if create_frame?
-      frames.last.add_pin_num(pin_num)
-      (raise ArgumentError) if frames.size >= 10 && frames.last.pin_num > 3
+    frames_manager.push_roll(pin_num)
   end
 
   def score
-    frames.each.with_index.reduce(0) do |sum, (frame, index)|
+    frames_manager.frames.each.with_index.reduce(0) do |sum, (frame, index)|
       frame_score = frame.result
-      frame_score += frame.bonus(next_frame(index)) unless next_frame(index).nil?
+      frame_score += frame.bonus(frames_manager.next_frame(index))
       sum += frame_score
     end
   end
 
   def frames_to_array
-    frames.reduce([]) { |sum, frame| sum.push(frame.values) }
-  end
-
-  def next_frame(index)
-    frames[index + 1]
-  end
-
-  def create_frame?
-    (frames.last.pin_num >= 2 || frames.last.strike?) && frames.size < 10
+    frames_manager.frames.reduce([]) { |sum, frame| sum.push(frame.values) }
   end
 end

@@ -18,6 +18,7 @@ class Frame
   end
 
   def bonus(next_frame)
+    return 0 if next_frame.nil?
     bonus_score = 0
     if(strike?)
       bonus_score += next_frame.values[0..1].reduce(:+)
