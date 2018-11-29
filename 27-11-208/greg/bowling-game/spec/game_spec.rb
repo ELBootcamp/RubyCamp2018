@@ -2,8 +2,33 @@ require 'spec_helper'
 require_relative '../game'
 
 RSpec.describe Game do
+  let(:nine_frames) do
+    subject.roll(1)
+    subject.roll(4)
+    subject.roll(4)
+    subject.roll(5)
+    subject.roll(6)
+    subject.roll(4)
+    subject.roll(5)
+    subject.roll(5)
+    subject.roll(10)
+    subject.roll(0)
+    subject.roll(1)
+    subject.roll(7)
+    subject.roll(3)
+    subject.roll(6)
+    subject.roll(4)
+    subject.roll(10)
+  end
+
+  let(:dummy_nine_frames) do
+    18.times do 
+    subject.roll(2)
+    end
+  end
+
   describe '#roll' do
-    it 'checks if frames return array with specific frames' do
+    it 'checks if frames return array with specific rolls grouped by frames' do
       subject.roll(2)
       expect(subject.frames).to eq([[2]])
       subject.roll(3)
@@ -25,9 +50,7 @@ RSpec.describe Game do
     end
 
     it 'checks if there are three rolls when player hits the spare in tenth frame' do
-      18.times do 
-        subject.roll(2)
-      end
+      dummy_nine_frames
       subject.roll(9)
       subject.roll(1)
       subject.roll(1)
@@ -36,19 +59,16 @@ RSpec.describe Game do
     end
 
     it 'checks if there are three rolls when player hits the strike in tenth frame' do
-      18.times do 
-        subject.roll(2)
-      end
+      dummy_nine_frames
       subject.roll(10)
       subject.roll(1)
+      subject.roll(1)
       expect(subject.frames)
-      .to eq([[2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [10, 1]])
+      .to eq([[2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [10, 1, 1]])
     end
 
     it 'checks if there are three rolls when player hits 3 strikes in tenth frame' do
-      18.times do 
-        subject.roll(2)
-      end
+      dummy_nine_frames
       subject.roll(10)
       subject.roll(10)
       subject.roll(10)
@@ -58,7 +78,7 @@ RSpec.describe Game do
   end
 
   describe '#score' do
-    it 'checks if score returns good result' do
+    it 'checks if score returns good result when player hit no spare or strike' do
       subject.roll(1)
       subject.roll(4)
       expect(subject.score).to eq(5)
@@ -75,7 +95,7 @@ RSpec.describe Game do
       expect(subject.score).to eq(23)
     end
 
-    it 'checks if score returns good result after knocking down strike' do
+    it 'checks if score returns good result after knocking down a strike' do
       subject.roll(10)
       subject.roll(7)
       subject.roll(2)
@@ -83,42 +103,12 @@ RSpec.describe Game do
     end
 
     it 'checks if score returns good result after nine frames' do
-      subject.roll(1)
-      subject.roll(4)
-      subject.roll(4)
-      subject.roll(5)
-      subject.roll(6)
-      subject.roll(4)
-      subject.roll(5)
-      subject.roll(5)
-      subject.roll(10)
-      subject.roll(0)
-      subject.roll(1)
-      subject.roll(7)
-      subject.roll(3)
-      subject.roll(6)
-      subject.roll(4)
-      subject.roll(10)
+      nine_frames
       expect(subject.score).to eq(107)
     end
 
     it 'checks if score returns good result after tenth frame when player rolled a spare' do
-      subject.roll(1)
-      subject.roll(4)
-      subject.roll(4)
-      subject.roll(5)
-      subject.roll(6)
-      subject.roll(4)
-      subject.roll(5)
-      subject.roll(5)
-      subject.roll(10)
-      subject.roll(0)
-      subject.roll(1)
-      subject.roll(7)
-      subject.roll(3)
-      subject.roll(6)
-      subject.roll(4)
-      subject.roll(10)
+      nine_frames
       subject.roll(2)
       subject.roll(8)
       subject.roll(6)
@@ -126,44 +116,14 @@ RSpec.describe Game do
     end
 
     it 'checks if score returns good result after tenth frame when player rolled a strike' do
-      subject.roll(1)
-      subject.roll(4)
-      subject.roll(4)
-      subject.roll(5)
-      subject.roll(6)
-      subject.roll(4)
-      subject.roll(5)
-      subject.roll(5)
-      subject.roll(10)
-      subject.roll(0)
-      subject.roll(1)
-      subject.roll(7)
-      subject.roll(3)
-      subject.roll(6)
-      subject.roll(4)
-      subject.roll(10)
+      nine_frames
       subject.roll(10)
       subject.roll(6)
       expect(subject.score).to eq(139)
     end
 
     it 'checks if score returns good result after tenth frame when player rolled a double strike' do
-      subject.roll(1)
-      subject.roll(4)
-      subject.roll(4)
-      subject.roll(5)
-      subject.roll(6)
-      subject.roll(4)
-      subject.roll(5)
-      subject.roll(5)
-      subject.roll(10)
-      subject.roll(0)
-      subject.roll(1)
-      subject.roll(7)
-      subject.roll(3)
-      subject.roll(6)
-      subject.roll(4)
-      subject.roll(10)
+      nine_frames
       subject.roll(10)
       subject.roll(10)
       expect(subject.score).to eq(147)
@@ -176,5 +136,4 @@ RSpec.describe Game do
       expect(subject.score).to eq(300)
     end
   end
-
 end
