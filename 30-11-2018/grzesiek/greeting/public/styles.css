@@ -1,0 +1,13 @@
+.main {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+body {
+  background-color: greenyellow;
+}
+h1 {
+  color: navy;
+  margin-left: 20px;
+}
