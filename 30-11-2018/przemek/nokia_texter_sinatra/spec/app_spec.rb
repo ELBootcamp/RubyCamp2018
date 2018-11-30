@@ -18,4 +18,9 @@ RSpec.describe 'Sinatra application' do
     get '/'
     expect(last_response.body).to match(/Nokia Texter/)
   end
+
+  it 'return proper nokia texter text' do
+    get '/?text=ale z cb super ziomek'
+    expect(last_response.body).to match(/ALEzCBsuperZIOMEK/)
+  end
 end
