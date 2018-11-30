@@ -1,0 +1,11 @@
+source "https://rubygems.org"
+
+group :test do
+    gem 'rspec'
+    gem 'rack-test'
+end
+
+group :development, :test do
+    gem 'sinatra'
+    gem 'rack-test'
+end
