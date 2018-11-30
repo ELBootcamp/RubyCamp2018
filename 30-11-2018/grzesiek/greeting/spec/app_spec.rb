@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './lib/app'
+require './app'
 require 'rack/test'
 
 RSpec.describe 'Sinatra greeting application' do
