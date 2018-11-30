@@ -23,4 +23,9 @@ RSpec.describe 'Sinatra application' do
     get '/?text=ale z cb super ziomek'
     expect(last_response.body).to match(/ALEzCBsuperZIOMEK/)
   end
+
+  it 'return error for to long text' do
+    get ('/?text=' + 'Z'*161)
+    expect(last_response.body).to match(/Won't fit into single sms/)
+  end
 end

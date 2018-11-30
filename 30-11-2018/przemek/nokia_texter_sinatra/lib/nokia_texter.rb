@@ -7,14 +7,21 @@ class NokiaTexter
 
   def squeeze
     (raise ArgumentError) unless text_msg.is_a?(String)
-    (raise MethodToLong) unless (text_msg.size < 160)
+    (raise MethodToLong) unless to_long(text_msg.size)
 
     text_split = text_msg.split
     text_split.size <= 1 && (return text_msg)
 
-    text_split.map.with_index do |word, index|
+    result = text_split.map.with_index do |word, index|
       index.even? ? word.upcase : word.downcase
     end.join
+
+    (raise MethodToLong) unless to_long(result.size)
+    return result
+  end
+
+  def to_long(size)
+    size < 160
   end
 end
 
