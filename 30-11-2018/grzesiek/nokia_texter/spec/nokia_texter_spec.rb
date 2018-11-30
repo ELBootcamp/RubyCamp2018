@@ -13,6 +13,10 @@ RSpec.describe NokiaTexter do
       expect(NokiaTexter.new('ZrobZakupyWyrzucSmieci').squeeze).to eq('ZrobZakupyWyrzucSmieci') 
     end
 
+    it "returns troll text when 'Frank Sinatra' is provided" do
+      expect(NokiaTexter.new('Frank Sinatra').squeeze).to eq('BardzoQwaŚmieszne') 
+    end
+
     it 'handles ASCII and UNICODE whitespaces' do
       expect(NokiaTexter.new("zaraz\n wracam").squeeze).to eq('ZARAZwracam')
     end
