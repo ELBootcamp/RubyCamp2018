@@ -6,4 +6,8 @@ RSpec.describe LcdDigitBuilder do
     expect { subject.build(99) }.to raise_error(ArgumentError)
     expect { subject.build('a') }.to raise_error(ArgumentError)
   end
+
+  it 'checks if build method returns proper result' do
+    expect(subject.build(9)).to eq("._.\n|_|\n..|")
+  end
 end
