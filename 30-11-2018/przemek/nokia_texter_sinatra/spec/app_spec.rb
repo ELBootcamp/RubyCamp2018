@@ -13,4 +13,9 @@ RSpec.describe 'Sinatra application' do
     get '/'
     expect(last_response).to be_ok
   end
+
+  it 'checks if view is returned' do
+    get '/'
+    expect(last_response.body).to match(/Nokia Texter/)
+  end
 end
