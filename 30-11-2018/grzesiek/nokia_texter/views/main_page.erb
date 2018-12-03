@@ -1,0 +1,25 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <meta charset="utf-8">
+  <title>Greeting app in Sinatra</title>
+</head>
+
+<body>
+  <div class="main">
+    <h1>Old school Nokia texter!</h1>
+    
+    <form>
+      <input name="text">
+      <input type="submit" value="Transform" class="button">
+    </form>
+
+    <div class='message'>
+      <%= @transformed_message %>
+    </div>
+  
+  </div>
+</body>
+</html>

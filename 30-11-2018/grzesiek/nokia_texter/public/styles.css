@@ -1,0 +1,24 @@
+.main {
+  align-items: center;
+  display: flex;
+  flex-flow: column nowrap;
+  border: 3px dotted yellow;
+}
+
+.button:hover {
+  color: yellow;  
+}
+
+.message {
+  color: red;
+  font-size: 56px;
+}
+
+body {
+  background-image: url(nokia_tile.jpg);
+}
+
+h1 {
+  color: navy;
+  margin-left: 20px;
+}
