@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Weather app</title>
+  <style>
+    
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h1>Insert your location:</h1>
+
+    <form class="form">
+      <label for="location">Location:</label>
+      <input name="location" />
+      <input type="submit" value="Show me the weather" class="button" >
+    </form>
+    <div class="response">
+      <img  src="<%= @weather %>">
+    </div>
+  </div>
+</body>
+</html>
