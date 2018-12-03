@@ -1,0 +1,25 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Weather App</title>
+</head>
+
+<body>
+  <div class="main">
+
+    <form class="form">
+      <label for="location">City</label>
+      <input name="location" />
+      <input type="submit" value="Submit" class="button" >
+    </form>
+    <div class="response">
+      <%# <%= @forecast %> %>
+      Min temp: <%= @min_temp %>
+      Max temp: <%= @max_temp %>
+      Rain: <%= @rain %>
+    </div>
+  </div>
+</body>
+</html>
