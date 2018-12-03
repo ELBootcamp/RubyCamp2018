@@ -1,0 +1,39 @@
+body {
+  background-image: url(nokia.jpg);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.main {
+  padding: 64px;
+  margin-top: 48px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.button {
+  border-radius: 0;
+  border: solid 1px white;
+  background: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.response {
+  background: rgb(0, 255, 0);
+  font-size: 16px;
+  color: deeppink;
+  font-weight: bolder;
+}
+
+.logo {
+  border-radius: 0;
+  border: solid 1px white;
+}
+
+h1 {
+  background: rgb(255, 0, 0);
+}
