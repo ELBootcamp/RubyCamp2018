@@ -4,6 +4,8 @@ require 'spec_helper'
 RSpec.describe LcdDigit do
   it 'raises ArgumentError if the argument is not a number' do
     expect { subject.build('a') }.to raise_error(ArgumentError)
+    expect { subject.build('1a3') }.to raise_error(ArgumentError)
+    expect { subject.build('1.0') }.to raise_error(ArgumentError)
   end
 
   it 'checks if build method returns proper result' do

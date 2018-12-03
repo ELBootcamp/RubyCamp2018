@@ -19,19 +19,17 @@ class LcdDigit
     
     number_array = number.digits.reverse
     lcd_string = ''
-    3.times do |line|
-      lcd_string += number_array.map do |number|
-          if line == 0
-            DIGITS[number][0..2]
-          elsif line == 1
-            DIGITS[number][3..5]
-          else
-            DIGITS[number][6..8]
-          end
-        end.join(' ') + "\n"
-    end
+    3.times { |line| lcd_string += draw_line(number_array, line) + "\n" }
     lcd_string.strip
+  end
+
+  def draw_line_for_digit(number, line)
+    counter = line * 3
+    DIGITS[number][counter..counter + 2]
+  end
+
+  def draw_line(number_array, line)
+    number_array.map { |number| draw_line_for_digit(number, line) }.join(' ')
   end
 end
 
-#LcdDigit.new.build("asd")
