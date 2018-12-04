@@ -27,6 +27,11 @@
         Max temperature: <%= day['Max_temperature'] %> C<br>
         Rain fall: <%= day['Rain_fall'] %> mm<br>
       <% end %>
+      <form class="form">
+      <input hidden name="city_name" value="<%= @city_name %>" />
+      <input hidden name="file" value="true"  />
+      <input type="submit" value="Download CSV" class="button" >
+    </form>
     <% end %>
     <% else %>
       <%= @error_msg %>

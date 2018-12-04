@@ -1,4 +1,5 @@
 require 'http'
+require 'csv'
 
 module WeatherFetcher
   module_function
@@ -34,6 +35,15 @@ module WeatherFetcher
         'Max_temperature' => day['Temperature']['Maximum']['Value'],
         'Rain_fall' => day['Day']['Rain']['Value']
       }
+    end
+  end
+
+  def weather_data_csv_export(weather_data)
+    csv_string = CSV.generate do |csv|
+      csv << weather_data[0].keys
+      weather_data.each do |day|
+        csv << day.values
+      end
     end
   end
 
