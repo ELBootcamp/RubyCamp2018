@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Weather</title>
+</head>
+
+<body>
+  <div class="main">
+    <form class="form">
+      <label for="city_name">Type city name:</label>
+      <input name="city_name" />
+      <input type="submit" value="Submit" class="button" >
+    </form>
+    <div class="response">
+      <% @weather_data.each.with_index do |day, i| %>
+        <p> Day <%= (i + 1)%> </p>
+        Min temperature: <%= day['Temperature']['Minimum']['Value'] %><br>
+        Max temperature: <%= day['Temperature']['Maximum']['Value'] %><br>
+        Rain fall: <%= day['Day']['Rain']['Value'] %><br>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>
