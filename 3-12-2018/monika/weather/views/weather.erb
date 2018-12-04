@@ -8,15 +8,17 @@
 
 <body>
   <div class="main">
-    <h1>Check Your Weather</h1>
 
-    <%# <form class="form">
-      <label for="gif_category">Find your gif</label>
-      <input name="gif_category" />
+    <form class="form">
+      <label for="location">City</label>
+      <input name="location" />
       <input type="submit" value="Submit" class="button" >
-    </form> %>
+    </form>
     <div class="response">
-      <%= @weather %>
+      <%# <%= @forecast %> %>
+      Min temp: <%= @min_temp %>
+      Max temp: <%= @max_temp %>
+      Rain: <%= @rain %>
     </div>
   </div>
 </body>
