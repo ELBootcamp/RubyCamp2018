@@ -15,12 +15,17 @@
     </form>
     <div class="response">
     <% unless @error_msg %>
+    <% if @city_name %>
+    <h3>Temperature for <%= @city_name.capitalize %></h3>
+    <% end %>
+    <% if @weather_data %>
       <% @weather_data.each.with_index do |day, i| %>
         <p> Day <%= (i + 1)%> </p>
-        Min temperature: <%= day['Min_temperature'] %><br>
-        Max temperature: <%= day['Max_temperature'] %><br>
-        Rain fall: <%= day['Rain_fall'] %><br>
+        Min temperature: <%= day['Min_temperature'] %> C<br>
+        Max temperature: <%= day['Max_temperature'] %> C<br>
+        Rain fall: <%= day['Rain_fall'] %> mm<br>
       <% end %>
+    <% end %>
     <% else %>
       <%= @error_msg %>
     <% end %>

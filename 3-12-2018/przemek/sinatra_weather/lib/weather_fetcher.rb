@@ -4,13 +4,16 @@ module WeatherFetcher
   module_function
 
   HOST = "http://dataservice.accuweather.com"
-  API_KEY = "8iGFfGHFtGsNzZTCyfwe1BoK9JLGlFwf"
+  API_KEY = "UVGsfCyAHjWjgwCxlDDt7jHRafVOAXEi"
 
   def get_location_key(city_name)
     (raise ArgumentError) unless city_name
 
+    city_name = city_name.tr(' ', '-')
+
     response = HTTP.get("#{HOST}/locations/v1/cities/PL/search?apikey=#{API_KEY}&q=#{city_name}")
     parsed_response = JSON.parse(response.body)
+    
     parsed_response[0]['Key'] if parsed_response[0]
   end
 
