@@ -3,63 +3,20 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Giphy</title>
-  <style>
-    body {
-      background: antiquewhite;
-      display: flex;
-      flex-flow: column nowrap;
-      align-items: center;
-    }
-
-    h1 {
-      font-size: 48px;
-      margin-top: 0;
-      margin-bottom: 0;
-      background: -webkit-linear-gradient(lightpink, hotpink);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .main {
-      padding: 12px;
-      margin-top: 36px;
-      border: 3px dotted hotpink;
-      display: flex;
-      flex-flow: column nowrap;
-      align-items: center;
-    }
-
-    .form {
-      margin: 24px 0;
-    }
-
-    .button {
-      border-radius: 4px;
-      border: solid 1px deeppink;
-      color: deeppink;
-      font-size: 12px;
-      font-weight: bold;
-      margin-top: 12px;
-    }
-
-    .response {
-      margin-top: 16px;
-    }
-  </style>
+  <title>Weather App</title>
 </head>
 
 <body>
   <div class="main">
-    <h1>Giphy!</h1>
+    <h1>Check Your Weather</h1>
 
-    <form class="form">
+    <%# <form class="form">
       <label for="gif_category">Find your gif</label>
       <input name="gif_category" />
       <input type="submit" value="Submit" class="button" >
-    </form>
+    </form> %>
     <div class="response">
-      <img id="gif" src="<%= @gif_url %>">
+      <%= @weather %>
     </div>
   </div>
 </body>
