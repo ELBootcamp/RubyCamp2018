@@ -31,7 +31,6 @@ module WeatherFetcher
       'max_temperature' => weather_data["Temperature"]["Maximum"]["Value"],
       'rain' => weather_data["Day"]["Rain"]["Value"]
     }
-    
   end
 
   def convert_to_csv(data)
