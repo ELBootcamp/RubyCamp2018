@@ -17,6 +17,7 @@ get '/' do
   end
 
   return erb :index unless params[:file] == 'true'
+  # Chyba raczej kolejny route powinien byc?
   content_type 'application/csv'
   attachment "data_#{@city_name}.csv"
   WeatherFetcher.weather_data_csv_export(@weather_data)

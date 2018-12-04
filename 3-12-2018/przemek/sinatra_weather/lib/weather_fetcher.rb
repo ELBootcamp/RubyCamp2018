@@ -5,7 +5,7 @@ module WeatherFetcher
   module_function
 
   HOST = "http://dataservice.accuweather.com"
-  API_KEY = "Oj5CXQGgzgnE4oGzZGd1GtBc4217bVQF"
+  API_KEY = "K2tjxrgt9AeB5lEFycbGtn5dxmHbj7rz"
 
   def get_location_key(city_name)
     (raise ArgumentError) unless city_name
@@ -16,8 +16,9 @@ module WeatherFetcher
     parsed_response = JSON.parse(response.body)
 
     (raise UnknownError) unless response.code == 200
+    (raise ArgumentError) unless parsed_response[0]
 
-    parsed_response[0]['Key'] if parsed_response[0]
+    parsed_response[0]['Key']
   end
 
   def get_5day_forecast(city_key)

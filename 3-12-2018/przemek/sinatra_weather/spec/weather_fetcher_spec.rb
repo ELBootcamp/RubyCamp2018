@@ -15,6 +15,10 @@ RSpec.describe WeatherFetcher do
     expect(subject.get_location_key('nowa huta')).to eq('274456')
   end
 
+  it 'raises ArgumentError if city name is invalid' do 
+    expect { subject.get_location_key('Asa cczczcwrwr35353fs') }.to raise_error(ArgumentError)
+  end
+
   it 'will generate proper csv file for given weather_data' do 
     weather_data = [
       {
