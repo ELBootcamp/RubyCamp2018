@@ -19,7 +19,10 @@
       <input type="submit" value="Show me the weather" class="button" >
     </form>
     <div class="response">
-      <img  src="<%= @weather %>">
+      <h1>The weather for location: <%= @location %>.</h1>
+      <p>Minimum temperature: <%= @min_temperature %> C</p>
+      <p>Maximum temperature: <%= @max_temperature %> C</p>
+      <p>Rain: <%= @rain %> mm</p>
     </div>
   </div>
 </body>
