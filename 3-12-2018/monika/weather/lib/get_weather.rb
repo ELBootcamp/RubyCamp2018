@@ -1,45 +1,64 @@
 require 'http'
 require 'byebug'
+require 'csv'
 
-module WeatherForecast
-  module_function
+class WeatherForecast
+  KEY = "sMKVk9lTLY7N9uRMBf3hQ9Ys9ePGlLsB".freeze
 
-  def get_forecast(location)
-    # city_location = HTTP.get("http://dataservice.accuweather.com/locations/v1/PL/search?apikey=sNlIqVNUrUFHGk40lGgEM3RsrqXoVwRV&q=#{location}")
-    # parsed_city_location = JSON.parse(city_location.body)[0]['Key']
-    # response = HTTP.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/#{parsed_city_location}?apikey=sNlIqVNUrUFHGk40lGgEM3RsrqXoVwRV&details=true&metric=true")
-    # parsed_response = JSON.parse(response.body)
+  def initialize(location)
+    city_location = HTTP.get("http://dataservice.accuweather.com/locations/v1/PL/search?apikey=#{KEY}&q=#{location}")
+    raise ApiError unless city_location.code == 200  
+        p JSON.parse(city_location.body)[0]
+    #raise NoCityFoundError unless JSON.parse(city_location.body)[0]
+    if JSON.parse(city_location.body)[0]
+      parsed_city_location = JSON.parse(city_location.body)[0]['Key'] 
+    else
+      parsed_city_location = "274663"
+    end
+    response = HTTP.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/#{parsed_city_location}?apikey=#{KEY}&details=true&metric=true")
+    @parsed_response = JSON.parse(response.body)
 
-    #parsed_response['DailyForecasts'][0]['Temperature']['Minimum']['Value']
-   # parsed_response['DailyForecasts'][0]['Temperature']['Maximum']['Value']
-    # parsed_response['DailyForecasts'][0]['Day']['Rain']['Value']
+    raise ApiError unless response.code == 200 
+    raise ApiError unless @parsed_response['DailyForecasts']
+    @forecasts = []
+    @min_temperatures = []
+    @max_temperatures = []
+    @rain = []
+
+     @parsed_response['DailyForecasts'].each do |item|
+      @forecasts.push(item['Date'][0..9])
+      @min_temperatures.push(item['Temperature']['Minimum']['Value'])
+      @max_temperatures.push(item['Temperature']['Maximum']['Value'])        
+      @rain.push(item['Day']['Rain']['Value'])
+    end
   end
 
-  def max_temperature(location)
-    city_location = HTTP.get("http://dataservice.accuweather.com/locations/v1/PL/search?apikey=sNlIqVNUrUFHGk40lGgEM3RsrqXoVwRV&q=#{location}")
-    parsed_city_location = JSON.parse(city_location.body)[0]['Key']
-    response = HTTP.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/#{parsed_city_location}?apikey=sNlIqVNUrUFHGk40lGgEM3RsrqXoVwRV&details=true&metric=true")
-    parsed_response = JSON.parse(response.body)
-    parsed_response['DailyForecasts'][0]['Temperature']['Maximum']['Value']
+  def get_forecast()
+    @forecasts
   end
 
-  def min_temperature(location)
-    city_location = HTTP.get("http://dataservice.accuweather.com/locations/v1/PL/search?apikey=sNlIqVNUrUFHGk40lGgEM3RsrqXoVwRV&q=#{location}")
-    byebug
-    parsed_city_location = JSON.parse(city_location.body)[0]['Key']
-
-    response = HTTP.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/#{parsed_city_location}?apikey=sNlIqVNUrUFHGk40lGgEM3RsrqXoVwRV&details=true&metric=true")
-    parsed_response = JSON.parse(response.body)
-    parsed_response['DailyForecasts'][0]['Temperature']['Minimum']['Value']
+  def max_temperature()
+    @max_temperatures
   end
 
-  def rain(location)
-    city_location = HTTP.get("http://dataservice.accuweather.com/locations/v1/PL/search?apikey=sNlIqVNUrUFHGk40lGgEM3RsrqXoVwRV&q=#{location}")
-    parsed_city_location = JSON.parse(city_location.body)[0]['Key']
-    response = HTTP.get("http://dataservice.accuweather.com/forecasts/v1/daily/1day/#{parsed_city_location}?apikey=sNlIqVNUrUFHGk40lGgEM3RsrqXoVwRV&details=true&metric=true")
-    parsed_response = JSON.parse(response.body)
-    parsed_response['DailyForecasts'][0]['Day']['Rain']['Value']
+  def min_temperature()
+    @min_temperatures
+  end
+
+  def rain()
+    @rain
+  end
+
+  def download()   
+    csv_string = CSV.generate do |csv|
+      @parsed_response['DailyForecasts'].each do |hash|
+        csv << hash.values
+      end
+    end
+    csv_string
   end
 end
+class ApiError < StandardError; end
+class NoCityFoundError < StandardError; end;
 
-WeatherForecast.get_forecast('Warsaw')
+p WeatherForecast.new('Warsaw').download
