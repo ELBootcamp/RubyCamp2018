@@ -14,12 +14,16 @@
       <input type="submit" value="Submit" class="button" >
     </form>
     <div class="response">
+    <% unless @error_msg %>
       <% @weather_data.each.with_index do |day, i| %>
         <p> Day <%= (i + 1)%> </p>
-        Min temperature: <%= day['Temperature']['Minimum']['Value'] %><br>
-        Max temperature: <%= day['Temperature']['Maximum']['Value'] %><br>
-        Rain fall: <%= day['Day']['Rain']['Value'] %><br>
+        Min temperature: <%= day['Min_temperature'] %><br>
+        Max temperature: <%= day['Max_temperature'] %><br>
+        Rain fall: <%= day['Rain_fall'] %><br>
       <% end %>
+    <% else %>
+      <%= @error_msg %>
+    <% end %>
     </div>
   </div>
 </body>
