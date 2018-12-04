@@ -4,7 +4,7 @@ module WeatherFetcher
   module_function
 
   HOST = "http://dataservice.accuweather.com"
-  API_KEY = "UVGsfCyAHjWjgwCxlDDt7jHRafVOAXEi"
+  API_KEY = "Oj5CXQGgzgnE4oGzZGd1GtBc4217bVQF"
 
   def get_location_key(city_name)
     (raise ArgumentError) unless city_name
@@ -14,6 +14,8 @@ module WeatherFetcher
     response = HTTP.get("#{HOST}/locations/v1/cities/PL/search?apikey=#{API_KEY}&q=#{city_name}")
     parsed_response = JSON.parse(response.body)
 
+    (raise UnknownError) unless response.code == 200
+
     parsed_response[0]['Key'] if parsed_response[0]
   end
 
@@ -22,7 +24,8 @@ module WeatherFetcher
 
     response = HTTP.get("#{HOST}/forecasts/v1/daily/5day/#{city_key}?apikey=#{API_KEY}&language=pl-pl&details=true&metric=true")
     parsed_response = JSON.parse(response.body)
-    
+
+    (raise UnknownError) unless response.code == 200
     (raise UnknownError) unless parsed_response['DailyForecasts']
 
     parsed_response['DailyForecasts'].map do |day|

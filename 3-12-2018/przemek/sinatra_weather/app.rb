@@ -12,7 +12,7 @@ get '/' do
     rescue ArgumentError
       @error_msg = 'Uncorrect city name was given!'
     rescue UnknownError
-      @error_msg = "Unknow API error"
+      @error_msg = "Unknown API error"
     end
   end
   erb :index
