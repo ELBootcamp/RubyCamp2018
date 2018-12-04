@@ -1,6 +1,7 @@
 require 'spec_helper'
 require './app'
 require 'rack/test'
+require 'byebug'
 
 RSpec.describe 'Weather app' do
   include Rack::Test::Methods
@@ -16,7 +17,6 @@ RSpec.describe 'Weather app' do
       'rain' => '4.0'
       }
   end
-
 
   it 'should allow accessing the home page' do
     get '/'
@@ -37,6 +37,11 @@ RSpec.describe 'Weather app' do
     expect(last_response.body).to include('Minimum temperature: -0.4')
     expect(last_response.body).to include('Maximum temperature: 8.7')
     expect(last_response.body).to include('Rain: 4.0')
+  end
+
+  it 'raises ArgumentError when user sends empty string' do
+    get '/?location='
+    expect(last_response.body).to match(/Unknown city. Please insert location once again./)
   end
 
 end

@@ -1,0 +1,14 @@
+.main {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
+.response {
+  margin: auto;
+  text-align: center;
+}
+
+.unknown_city {
+  color: red;
+}

@@ -1,11 +1,15 @@
 require 'http'
+require 'byebug'
+require 'csv'
 
 module WeatherFetcher
   module_function
 
-  API_KEY = 'SBnLFY4eHnAR3b2UqjfEqsTEEI4iaITe'
+  API_KEY = '5dELbO869g0TMpA6mBrQdQ8zZstnKRPh'
 
   def sanitize_location(location_to_sanitize)
+    location_to_sanitize.empty? && raise(ArgumentError)
+
     sanitized_string = location_to_sanitize.tr("ąęźżóńł ", "aezzonl-")
   end
 
@@ -27,5 +31,13 @@ module WeatherFetcher
       'max_temperature' => weather_data["Temperature"]["Maximum"]["Value"],
       'rain' => weather_data["Day"]["Rain"]["Value"]
     }
+    
+  end
+
+  def convert_to_csv(data)
+    CSV.open("forecast.csv", "wb") do |csv|
+      csv << data.keys
+      csv << data.values
+    end
   end
 end
