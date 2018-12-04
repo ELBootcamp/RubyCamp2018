@@ -18,12 +18,14 @@
       <input name="location" />
       <input type="submit" value="Show me the weather" class="button" >
     </form>
-    <div class="response">
-      <h1>The weather for location: <%= @location %>.</h1>
-      <p>Minimum temperature: <%= @data['min_temperature'] %> C</p>
-      <p>Maximum temperature: <%= @data['max_temperature'] %> C</p>
-      <p>Rain: <%= @data['rain'] %> mm</p>
-    </div>
+    <%if @data %>
+      <div class="response">
+        <h1>The weather for location: <%= @location %>.</h1>
+        <p>Minimum temperature: <%= @data['min_temperature'] %> C</p>
+        <p>Maximum temperature: <%= @data['max_temperature'] %> C</p>
+        <p>Rain: <%= @data['rain'] %> mm</p>
+      </div>
+    <% end %>
   </div>
 </body>
 </html>
