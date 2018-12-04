@@ -5,8 +5,12 @@ require 'rack/test'
 RSpec.describe 'Weather app' do
   include Rack::Test::Methods
 
+  let(:location_url) do
+    'http://dataservice.accuweather.com/locations/v1/cities/search?apikey=SBnLFY4eHnAR3b2UqjfEqsTEEI4iaITe&q=warszawa&language=pl-pl&details=true"'
+  end
+  
   let(:forecast_url) do
-    'http://dataservice.accuweather.com/forecasts/v1/daily/1day/274663?apikey=ZsUQlr6IiR08KhJiLoftMi0E8N8mYteX&details=true&metric=true'
+    'http://dataservice.accuweather.com/forecasts/v1/daily/1day/274663?apikey=SBnLFY4eHnAR3b2UqjfEqsTEEI4iaITe&details=true&metric=true'
   end
 
   def app
@@ -15,7 +19,6 @@ RSpec.describe 'Weather app' do
 
   it 'should allow accessing the home page' do
     get '/'
-
     expect(last_response).to be_ok
   end
 

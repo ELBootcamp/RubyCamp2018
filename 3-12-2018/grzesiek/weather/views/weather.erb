@@ -20,9 +20,9 @@
     </form>
     <div class="response">
       <h1>The weather for location: <%= @location %>.</h1>
-      <p>Minimum temperature: <%= @min_temperature %> C</p>
-      <p>Maximum temperature: <%= @max_temperature %> C</p>
-      <p>Rain: <%= @rain %> mm</p>
+      <p>Minimum temperature: <%= @data['min_temperature'] %> C</p>
+      <p>Maximum temperature: <%= @data['max_temperature'] %> C</p>
+      <p>Rain: <%= @data['rain'] %> mm</p>
     </div>
   </div>
 </body>
