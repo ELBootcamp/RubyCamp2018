@@ -1,0 +1,39 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Weather app</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="main">
+    <h1>Insert your location:</h1>
+
+    <form class="form">
+      <label for="location">Location:</label>
+      <input name="location" />
+      <input type="submit" value="Show me the weather" class="button" >
+    </form>
+
+    <%if @data %>
+      <div class="response">
+        <h1>The weather for location: <%= @location %>.</h1>
+        <p>Minimum temperature: <%= @data['min_temperature'] %> C</p>
+        <p>Maximum temperature: <%= @data['max_temperature'] %> C</p>
+        <p>Rain: <%= @data['rain'] %> mm</p>
+        <form class="form">
+          <input type="hidden" name="location" value="<%= @location %>"/>
+          <input type="hidden" name="to_csv" value="true" />
+          <input type="submit" value="Import data to CSV" class="button" >
+        </form>
+      </div>
+    <% else %>
+      <div class="unknown_city">
+        <h2><%= @unknown %></h2>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>
