@@ -13,18 +13,24 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params)
+    @user = User.new(user_params)
 
-    redirect_to @user
+    if @user.save
+      redirect_to @user
+    else
+      render :new
+    end
   end
 
   def edit
   end
 
   def update
-    @user.update(user_params)
-
-    redirect_to @user
+    if @user.update(user_params)
+      redirect_to @user
+    else
+      render :edit
+    end
   end
 
   def destroy
