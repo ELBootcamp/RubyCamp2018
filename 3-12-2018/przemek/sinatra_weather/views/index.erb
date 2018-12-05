@@ -1,0 +1,42 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Weather</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <h1>Weather App</h1>
+  <div class="main">
+    <form class="form">
+      <label for="city_name">Type city name:</label>
+      <input name="city_name" />
+      <input type="submit" value="Submit" class="button" >
+    </form>
+    <div class="response">
+    <% unless @error_msg %>
+    <% if @city_name %>
+    <h3>Temperature for <%= @city_name.capitalize %></h3>
+    <% end %>
+    <% if @weather_data %>
+      <% @weather_data.each.with_index do |day, i| %>
+        <p> Day <%= (i + 1)%> </p>
+        Min temperature: <%= day['Min_temperature'] %> C<br>
+        Max temperature: <%= day['Max_temperature'] %> C<br>
+        Rain fall: <%= day['Rain_fall'] %> mm<br>
+      <% end %>
+      <form class="form">
+      <input hidden name="city_name" value="<%= @city_name %>" />
+      <input hidden name="file" value="true"  />
+      <input type="submit" value="Download CSV" class="button" >
+    </form>
+    <% end %>
+    <% else %>
+      <%= @error_msg %>
+    <% end %>
+    </div>
+  </div>
+</body>
+</html>
