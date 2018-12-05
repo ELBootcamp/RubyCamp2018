@@ -5,8 +5,7 @@ require 'byebug'
 get '/' do
   begin
     if params[:location]
-      sanitized_location = WeatherFetcher.sanitize_location(params[:location])
-      location_key = WeatherFetcher.get_location_key(sanitized_location)
+      location_key = WeatherFetcher.get_location_key(params[:location])
       @location = params[:location].capitalize
       @data = WeatherFetcher.get_weather_data(location_key)
     end

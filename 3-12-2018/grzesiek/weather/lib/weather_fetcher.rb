@@ -7,17 +7,18 @@ module WeatherFetcher
 
   API_KEY = '5dELbO869g0TMpA6mBrQdQ8zZstnKRPh'
 
+  def get_location_key(location)
+    sanitized_location = sanitize_location(location)
+    response = HTTP.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=#{API_KEY}&q=#{sanitized_location}&details=true")
+    parsed_response = JSON.parse(response.body)
+
+    location_key = parsed_response[0]["Key"]
+  end
+
   def sanitize_location(location_to_sanitize)
     location_to_sanitize.empty? && raise(ArgumentError)
 
     sanitized_string = location_to_sanitize.tr("ąęźżóńł ", "aezzonl-")
-  end
-
-  def get_location_key(location)
-    response = HTTP.get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey=#{API_KEY}&q=#{location}&details=true")
-    parsed_response = JSON.parse(response.body)
-
-    location_key = parsed_response[0]["Key"]
   end
 
   def get_weather_data(location_key)
