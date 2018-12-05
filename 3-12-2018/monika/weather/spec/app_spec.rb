@@ -1,15 +1,9 @@
-ENV['RACK_ENV'] = 'test'
-
 require 'spec_helper'
 require './app'
 require 'rack/test'
 
 RSpec.describe 'Weather application' do
   include Rack::Test::Methods
-
-  before do
-  	allow(WeatherForecast.new('Warsaw')).to receive(:max_temperature).and_return('7.3')
-  end
 
   def app
     Sinatra::Application

@@ -4,18 +4,18 @@ require 'csv'
 
 class WeatherForecast
   KEY = "sMKVk9lTLY7N9uRMBf3hQ9Ys9ePGlLsB".freeze
+  HOST = "http://dataservice.accuweather.com/"
 
   def initialize(location)
-    city_location = HTTP.get("http://dataservice.accuweather.com/locations/v1/PL/search?apikey=#{KEY}&q=#{location}")
+    city_location = HTTP.get("#{HOST}locations/v1/PL/search?apikey=#{KEY}&q=#{location}")
     raise ApiError unless city_location.code == 200  
-        p JSON.parse(city_location.body)[0]
     #raise NoCityFoundError unless JSON.parse(city_location.body)[0]
     if JSON.parse(city_location.body)[0]
       parsed_city_location = JSON.parse(city_location.body)[0]['Key'] 
     else
       parsed_city_location = "274663"
     end
-    response = HTTP.get("http://dataservice.accuweather.com/forecasts/v1/daily/5day/#{parsed_city_location}?apikey=#{KEY}&details=true&metric=true")
+    response = HTTP.get("#{HOST}forecasts/v1/daily/5day/#{parsed_city_location}?apikey=#{KEY}&details=true&metric=true")
     @parsed_response = JSON.parse(response.body)
 
     raise ApiError unless response.code == 200 
@@ -49,16 +49,15 @@ class WeatherForecast
     @rain
   end
 
-  def download()   
-    csv_string = CSV.generate do |csv|
+  def download()
+    CSV.generate do |csv|
       @parsed_response['DailyForecasts'].each do |hash|
         csv << hash.values
       end
     end
-    csv_string
   end
 end
 class ApiError < StandardError; end
 class NoCityFoundError < StandardError; end;
 
-p WeatherForecast.new('Warsaw').download
+
