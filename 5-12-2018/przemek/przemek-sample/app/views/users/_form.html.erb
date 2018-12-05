@@ -1,12 +1,10 @@
 <% if @user.errors.any? %>
-  <div id="error_explanation">
-    <h3>Errors occurred:</h3>
-    <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  </div>
+  <h3>Errors occurred:</h3>
+  <ul>
+  <% @user.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+  </ul>
 <% end %>
 
 <%= form_for @user do |form| %>
@@ -18,6 +16,11 @@
   <p>
     <%= form.label :last_name %><br>
     <%= form.text_field :last_name %>
+  </p>
+
+  <p>
+    <%= form.label :nick_name %><br>
+    <%= form.text_field :nick_name %>
   </p>
 
   <p>
