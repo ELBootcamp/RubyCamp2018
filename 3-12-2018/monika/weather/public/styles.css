@@ -1,0 +1,32 @@
+body {
+      background-image: url(background.gif);
+      background-size:     cover;                     
+      background-repeat:   no-repeat;
+      background-position: center center;  
+    }
+h1 {
+      font-size: 48px;
+      margin-top: 0;
+      color: navy;
+    }
+.main {
+      padding: 1px;
+      margin-top: 36px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+}
+.form {
+      margin: 40px 0;
+    }
+ .button {
+      color: blue;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 12px;
+ }
+ .response {
+      float:left;
+      padding: 0px;
+      width:20%;
+ }

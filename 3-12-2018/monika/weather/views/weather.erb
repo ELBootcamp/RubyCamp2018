@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>Weather App</title>
+</head>
+
+<body>
+  <div class="main">
+    <h1>Weather Forecast</h1>
+    <form class="form">
+      <label for="location">City</label>
+      <input name="location" value="<%= params[:location] %>" />
+      <input type="submit" value="Submit" class="button" >
+    </form>
+    <div >
+      <% if @forecast && (@forecast.length == 5) %>
+        <% 5.times do |item| %>
+        <div class="response">
+          Forecast for: <%= @forecast[item] %>
+          <br>
+          Min temperature: <%= @min_temp[item] %>
+          <br>
+          Max temperature: <%= @max_temp[item] %>
+          <br>
+          Rain: <%= @rain[item] %>
+        </div>
+        <% end %>
+        <br>
+      </div>
+      <div>
+        <% if params[:location] %>
+          <a href="/download" download><button class="button">Download</button></a>
+        <% end %>
+      </div>
+      <% end %>
+      <div class='message'>
+      <%= @error_message %>
+    </div>
+  </div>
+</body>
+</html>
