@@ -10,7 +10,7 @@ module WeatherFetcher
   def get_location_key(city_name)
     (raise ArgumentError) unless city_name
 
-    city_name = sanitize_polish_characters(city_name.tr(' ', '-'))
+    city_name = sanitize_cityname(city_name)
 
     response = HTTP.get("#{HOST}/locations/v1/cities/PL/search?apikey=#{API_KEY}&q=#{city_name}")
     parsed_response = JSON.parse(response.body)
@@ -48,8 +48,8 @@ module WeatherFetcher
     end
   end
 
-  def sanitize_polish_characters(str)
-    str.tr('ąćęłńóśźż', 'acelnoszz')
+  def sanitize_cityname(str)
+    str.tr('ąćęłńóśźż ', 'acelnoszz-')
   end  
 end
 
