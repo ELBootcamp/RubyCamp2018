@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
   def index 
     @users = User.all
   end
 
   def show 
-    @user = User.find(params[:id])
   end
 
   def new
@@ -13,36 +14,31 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_path(@user), notice: 'User created.' }
-      else
-        format.html { render :new }
-      end
+    if @user.save
+      redirect_to user_path(@user), notice: 'User created.' 
+    else        
+      render :new 
     end 
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update 
-    @user = User.find(params[:id])
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to user_path(@user), notice: 'Update successful.' }
-      else
-        format.html { render :edit }
-      end
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Update successful.'
+    else        
+      render :edit 
     end
   end
 
   def destroy 
-    user = User.find(params[:id])
     user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_path, notice: 'User deleted.' }
-    end
+    redirect_to users_path, notice: 'User deleted.' 
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
   
   def user_params
