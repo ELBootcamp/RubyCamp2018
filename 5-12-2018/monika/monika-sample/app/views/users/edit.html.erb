@@ -1,0 +1,19 @@
+<h1>Edit user</h1>
+<%= form_for @user, url: {action: "update"} do |form| %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :age %>
+    <%= form.text_field :age %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Update"%>
+  </div>
+<% end %>
+<br>
+<%= link_to 'Back', users_path %>
