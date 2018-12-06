@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+<h1>All Posts</h1>
+<table>
+<% @posts.each do |post|%>
+  <tr>
+    <td> <b>Title:</b> <%= post.title %> </td>
+    <td> <b>Content:</b> <%= post.content %> </td>
+    <td><%= link_to 'Show', post %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) %></td>
+    <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'My posts', profile_path %>
+<%= link_to 'New', new_post_path %>
