@@ -1,0 +1,17 @@
+table {
+  border: 1px solid black;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+button {
+  background-color: #4CAF50; /* Green */
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
