@@ -6,7 +6,7 @@ class UserController < ApplicationController
   end
 
   def nick
-    @user = current_user
+    @user = User.find(current_user.id)
   end
 
   def add_nick
