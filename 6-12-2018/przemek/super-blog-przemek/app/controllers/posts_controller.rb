@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :post_owner, only: [:edit, :update, :destroy]
 
   def index 
     redirect_to profile_path
@@ -51,5 +52,11 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find(params[:id])
+  end
+
+  def post_owner
+    unless @post.user_id == current_user.id
+      redirect_to posts_path
+     end
   end
 end
