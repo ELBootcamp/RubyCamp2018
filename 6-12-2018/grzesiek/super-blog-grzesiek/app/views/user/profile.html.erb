@@ -9,12 +9,15 @@
     <button>
     <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
     </button>
+    <button><%= link_to "Click for surprise", new_post_path %></button>
   <% else %>
     <button>
     <%= link_to('Login', new_user_session_path)  %>  
     </button>
   <% end %>
   <br/>
+
+  <h1>Hello <%= current_user.email %></h1>
 
   <table>
     <thead>
