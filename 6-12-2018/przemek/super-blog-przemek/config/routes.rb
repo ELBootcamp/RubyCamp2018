@@ -5,5 +5,7 @@ Rails.application.routes.draw do
 
   get '/profile', to: 'profile#index', as: 'profile'
 
-  resources :posts
+  resources :posts do 
+    resources :comments
+  end
 end
