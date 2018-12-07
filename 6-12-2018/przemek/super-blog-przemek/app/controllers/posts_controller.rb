@@ -1,11 +1,11 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index 
     redirect_to profile_path
   end
 
   def show
-    @post = Post.find(params[:id])
   end
 
   def new 
@@ -24,20 +24,32 @@ class PostsController < ApplicationController
   end
 
   def edit 
-    @post = Post.find(params[:id])
   end
 
   def update 
-    if @post.update
+    # make it unable to edit someone else post
+    if @post.update(post_params)
       redirect_to @post
     else
       render :edit
     end
   end
 
+
+  def destroy
+    # make it unable to destroy someone else post
+    @post.destroy
+
+    redirect_to users_path
+  end
+
   private 
 
   def post_params
     params.require(:post).permit(:title, :content)
+  end
+
+  def set_post
+    @post = Post.find(params[:id])
   end
 end
