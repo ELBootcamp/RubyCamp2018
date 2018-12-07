@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, expect: [:index] 
 
   def show
   end
@@ -17,7 +18,10 @@ class PostsController < ApplicationController
 
   def destroy 
     @post.destroy
-    redirect_to posts_path, notice: 'User deleted.' 
+    redirect_to posts_path, notice: 'Post deleted.' 
+  end
+
+  def rate 
   end
 
   def set_user
@@ -47,6 +51,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content, :selected_rating)
   end
 end
