@@ -3,9 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  get '/profile', to: 'profiles#index'
+  get '/profile', to: 'profile#index', as: 'profile'
 
-  resources :users do 
-    resources :posts
-  end
+  resources :posts
 end

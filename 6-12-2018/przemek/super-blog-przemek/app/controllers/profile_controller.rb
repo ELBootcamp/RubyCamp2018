@@ -1,4 +1,4 @@
-class ProfilesController < ApplicationController
+class ProfileController < ApplicationController
   
   def index
     @posts = current_user.posts
