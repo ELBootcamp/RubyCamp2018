@@ -28,7 +28,6 @@ class PostsController < ApplicationController
   end
 
   def update 
-    # make it unable to edit someone else post
     if @post.update(post_params)
       redirect_to @post
     else
@@ -38,10 +37,9 @@ class PostsController < ApplicationController
 
 
   def destroy
-    # make it unable to destroy someone else post
     @post.destroy
 
-    redirect_to users_path
+    redirect_to posts_path
   end
 
   private 
